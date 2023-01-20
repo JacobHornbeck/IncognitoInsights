@@ -1,0 +1,7 @@
+{
+  "name": "MysteryShoppingApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
