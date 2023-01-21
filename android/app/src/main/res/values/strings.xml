@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MysteryShoppingApp</string>
+    <string name="title_activity_main">MysteryShoppingApp</string>
+    <string name="package_name">mystery.shopping.app</string>
+    <string name="custom_url_scheme">mystery.shopping.app</string>
+</resources>

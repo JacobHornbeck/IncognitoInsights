@@ -1,0 +1,111 @@
+.message-item {
+    color: white;
+    max-width: 500px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 7px gray;
+    border-color: transparent;
+    margin: 2.5rem 1rem 1rem;
+    position: relative;
+    width: max-content;
+    padding: 1rem;
+
+    &.audio {
+        padding: 0 1rem;
+    }
+
+    @for $i from 9 through 13 {
+        &.fontSize#{$i} {
+            font-size: #{$i}pt;
+        }
+    }
+
+    * {
+        font-size: inherit;
+    }
+
+    span {
+        display: flex;
+        position: absolute;
+        align-items: center;
+        width: max-content;
+        font-size: small;
+        color: gray;
+        top: -2rem;
+
+        ion-button {
+            &::part(native) {
+                padding: 0;
+            }
+            ion-icon {
+                transform: scale(0.9);
+            }
+        }
+    }
+    
+    &.starterMessage {
+        margin: 1rem;
+    }
+    &.result {
+        background: darken(skyblue, 15);
+        
+        span {
+            left: 0;
+            ion-button {
+                order: 0;
+            }
+        }
+    }
+    &.output {
+        margin-left: auto;
+        background: royalblue;
+        
+        span {
+            right: 0;
+            ion-button {
+                order: 1;
+            }
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        max-width: 80%;
+    }
+
+    code {
+        display: block;
+        font-family: monospace;
+    }
+
+
+    p {
+        font-size: inherit;
+        margin: 0;
+        & + p {
+            padding-top: 0.5rem;
+        }
+    }
+}
+
+
+ion-footer {
+    box-shadow: 0 0 7px gray;
+    ion-item ion-button {
+        display: flex;
+        align-items: center;
+        ion-icon {
+            transform: scale(0.9);
+        }
+    }
+}
+
+app-audio {
+    display: flex;
+    align-items: center;
+
+    ion-range {
+        min-width: 50px;
+    }
+    ion-icon {
+        transform: scale(0.9);
+    }
+}
