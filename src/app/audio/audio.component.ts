@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-audio',
-  templateUrl: './audio.component.html',
-  styleUrls: ['./audio.component.scss'],
+    selector: 'app-audio',
+    templateUrl: './audio.component.html',
+    styleUrls: ['./audio.component.scss'],
 })
 export class AudioComponent implements AfterViewInit {
     @ViewChild('audioEl') audio: ElementRef;
@@ -16,7 +16,9 @@ export class AudioComponent implements AfterViewInit {
     
     constructor(public sanitizer: DomSanitizer) {}
     ngAfterViewInit(): void {
-
+        this.audio.nativeElement.src = this.audioSource
+        this.downloadLink.nativeElement.href = this.audioSource.replace(/(audio\/).*\;/i, 'audio/mp3;')
+        this.downloadLink.nativeElement.download = 'audioRecording-'+this.recordDate.replace(/\ /i, '-')
     }
 
     calculateTime(secs: number) {

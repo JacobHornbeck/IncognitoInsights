@@ -1,20 +1,63 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title><ion-icon name="bag-handle-outline"></ion-icon> Mystery Shopping</ion-title>
+        <ion-buttons slot="end">
+            <ion-button routerLink="/settings" class="button-icon-only"><ion-icon slot="icon-only" name="settings-outline"></ion-icon></ion-button>
+            <ion-button routerLink="/settings" class="button-with-icon"><ion-icon slot="start" name="settings-outline"></ion-icon><span>Settings</span></ion-button>
+        </ion-buttons>
     </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+</ion-header>
+<ion-content class="custom-scroll-box">
+    <div class="shop-list">
+        <ion-card *ngFor="let shop of allShops; let i = index">
+            <ion-card-header class="no-padding-bottom">
+                <ion-card-title>{{ shop.title }}</ion-card-title>
+                <ion-card-subtitle>{{ formatDate(shop.date) }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-buttons class="small-padding">
+                <ion-button color="dark" slot="start" routerLink="/shop/{{ i }}">Open</ion-button>
+                <ion-button color="danger" slot="start" (click)="deleteShop(i)">Delete</ion-button>
+                <ion-button color="primary" slot="end" (click)="editShop(i)">Edit</ion-button>
+            </ion-buttons>
+        </ion-card>
+        <ion-text class="ion-margin-start" *ngIf="allShops.length == 0">
+            <h3>No Shops</h3>
+        </ion-text>
+    </div>
+    <ion-fab>
+        <ion-fab-button (click)="newShop()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+        <ng-template>
+                <ion-header>
+                    <ion-toolbar>
+                        <ion-title>{{ modalTitle }}</ion-title>
+                        <ion-buttons slot="end">
+                            <ion-button color="danger" [strong]="true" (click)="cancel()"><ion-icon name="close-outline"></ion-icon></ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ion-header>
+                <ion-content class="ion-padding-horizontal" *ngIf="mode == 'create' || mode == 'edit'">
+                    <ion-item class="ion-margin-top">
+                        <ion-label position="floating">Shop Name</ion-label>
+                        <ion-input type="text" [(ngModel)]="shopName" ngModel required #shopNameInput></ion-input>
+                    </ion-item>
+                </ion-content>
+                <ion-content *ngIf="mode == 'delete'">
+                    <ion-text>
+                        <p class="ion-padding-horizontal">Are you sure you want to delete the shop named "{{ shopName }}"</p>
+                    </ion-text>
+                </ion-content>
+                <ion-footer>
+                    <ion-toolbar>
+                        <ion-buttons slot="end">
+                            <ion-button *ngIf="mode == 'create' || mode == 'edit'" (click)="confirm(mode)" [strong]="true" slot="end" color="primary"><ion-icon name="{{ mode == 'create' ? 'arrow-forward-outline' : 'refresh-outline' }}" slot="end"></ion-icon>{{ mode == 'create' ? 'Start' : 'Update' }}</ion-button>
+                            <ion-button *ngIf="mode == 'delete'" (click)="confirm('delete')" [strong]="true" slot="end" color="danger"><ion-icon name="trash-outline" slot="end"></ion-icon>Delete</ion-button>
+                        </ion-buttons>
+                    </ion-toolbar>
+                </ion-footer>
+        </ng-template>
+    </ion-modal>
 </ion-content>

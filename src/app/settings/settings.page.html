@@ -1,9 +1,77 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>settings</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button routerLink="/home"><ion-icon name="arrow-back-outline" slot="start"></ion-icon></ion-button>
+        </ion-buttons>
+        <ion-title>App Settings</ion-title>
+    </ion-toolbar>
 </ion-header>
-
-<ion-content>
-
+<ion-content class="ion-padding custom-scroll-box">
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="12" sizeMd="8" sizeSm="10" sizeXs="12" sizeXl="6">
+                <ion-list lines="none">
+                    <ion-item color="light" class="ion-margin-vertical">
+                        <ion-label position="floating">Name To Show</ion-label>
+                        <ion-input [value]="nameToShow" (ionBlur)="updateName(nameInput)" #nameInput></ion-input>
+                    </ion-item>
+                    <ion-item *ngIf="showWideToggle" color="light" class="ion-margin-vertical dateFormatToggle" [detail]="false" (click)="toggleDateFormat()" button>
+                        <ion-grid>
+                            <ion-col>
+                                <ion-row>
+                                    <ion-label [color]="dateFormatToggle.checked ? 'medium' : ''">Absolute Date</ion-label>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-note>e.g. {{ absoluteDateExample }}</ion-note>
+                                </ion-row>
+                            </ion-col>
+                        </ion-grid>
+                        <ion-toggle #dateFormatToggle (click)="toggleDateFormat()"></ion-toggle>
+                        <ion-grid>
+                            <ion-col>
+                                <ion-row class="ion-justify-content-end">
+                                    <ion-label [color]="dateFormatToggle.checked ? '' : 'medium'">Relative Date</ion-label>
+                                </ion-row>
+                                <ion-row class="ion-justify-content-end ion-text-right">
+                                    <ion-note>e.g. {{ relativeDateExample }}</ion-note>
+                                </ion-row>
+                            </ion-col>
+                        </ion-grid>
+                    </ion-item>
+                    <ion-item *ngIf="showTallToggle" color="light" class="ion-margin-vertical dateFormatToggle" [detail]="false" (click)="toggleDateFormat()" button>
+                        <ion-grid>
+                            <ion-col>
+                                <ion-row class="ion-justify-content-center">
+                                    <ion-label [color]="dateFormatToggle.checked ? 'medium' : ''">Absolute Date</ion-label>
+                                </ion-row>
+                                <ion-row class="ion-justify-content-center">
+                                    <ion-note>e.g. {{ absoluteDateExample }}</ion-note>
+                                </ion-row>
+                                <ion-row class="ion-justify-content-center ion-padding">
+                                    <ion-toggle #dateFormatToggle (click)="toggleDateFormat()"></ion-toggle>
+                                </ion-row>
+                                <ion-row class="ion-justify-content-center">
+                                    <ion-label [color]="dateFormatToggle.checked ? '' : 'medium'">Relative Date</ion-label>
+                                </ion-row>
+                                <ion-row class="ion-justify-content-center">
+                                    <ion-note>e.g. {{ relativeDateExample }}</ion-note>
+                                </ion-row>
+                            </ion-col>
+                        </ion-grid>
+                    </ion-item>
+                    <ion-item color="light" class="ion-margin-vertical with-checkbox" (click)="updateStarter(starterCheckbox)">
+                        <ion-checkbox slot="start" #starterCheckbox></ion-checkbox>
+                        <ion-label>Show starter message</ion-label>
+                    </ion-item>
+                    <ion-item color="light" class="ion-margin-vertical">
+                        <ion-label position="stacked">Message Font Size</ion-label>
+                        <ion-range [(ngModel)]="messageFontSize" [ticks]="true" [snaps]="true" [min]="9" [max]="13" [pin]="true" [pinFormatter]="pinFormatter" (ionChange)="saveSettings()">
+                            <ion-text slot="start">9pt</ion-text>
+                            <ion-text slot="end">13pt</ion-text>
+                        </ion-range>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

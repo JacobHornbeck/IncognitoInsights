@@ -7,14 +7,10 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AudioComponent } from "./shop/audio/audio.component";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        AudioComponent,
-    ],
+    declarations: [ AppComponent ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -24,6 +20,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         IonicModule.forRoot(),
     ],
     providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-    bootstrap: [AppComponent],
+    bootstrap: [ AppComponent ],
 })
 export class AppModule {}
