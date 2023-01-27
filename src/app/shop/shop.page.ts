@@ -44,7 +44,6 @@ export class ShopPage implements OnInit, OnDestroy {
         this.addImageSubscription = this.addImage.afterRestart.subscribe((imageData: string) => {
             this.post('photo take', true, 'command');
             this.post(imageData || '', false, 'image')
-            this.post(`<a download="image.jpg" href="${imageData}">Download image</a>`, false)
             this.scroll(1000, true)
         })
         VoiceRecorder.hasAudioRecordingPermission()
@@ -187,13 +186,12 @@ export class ShopPage implements OnInit, OnDestroy {
                 quality: 50,
                 resultType: CameraResultType.Base64,
                 allowEditing: false,
-                saveToGallery: false,
+                saveToGallery: true,
                 source: CameraSource.Camera
             })
             .then((result:any) => {
                 this.post('photo take', true, 'command');
                 this.post(`data:image/jpeg;base64,${result.base64String}`, false, 'image')
-                this.post(`<a download="image.jpg" href="data:image/jpeg;base64,${result.base64String}">Download image</a>`, false)
                 this.scroll(1000, true)
             })
             .catch((error) => {
