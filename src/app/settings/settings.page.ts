@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { IonCheckbox, IonToggle } from '@ionic/angular';
+import { IonCheckbox } from '@ionic/angular';
 
 import { SettingsService } from '../services/settings.service';
-import { getAbsoluteDate, getRelativeDate, getViewport } from "../utils/helper-functions";
+import { ThemeService } from '../services/theme.service';
+import { getAbsoluteDate, getRelativeDate } from "../utils/helper-functions";
 
 @Component({
   selector: 'app-settings',
@@ -10,14 +11,15 @@ import { getAbsoluteDate, getRelativeDate, getViewport } from "../utils/helper-f
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, AfterViewInit {
-    @ViewChild('dateFormatToggle') dateFormat: IonToggle;
     @ViewChild('starterCheckbox') starterMessage: IonCheckbox;
+    dateFormat: string = 'absolute';
+    userTheme: string = 'auto';
     nameToShow: string = 'Jacob';
     absoluteDateExample: string;
     relativeDateExample: string;
     messageFontSize: number = 11;
 
-    constructor(private settings: SettingsService) {}
+    constructor(private settings: SettingsService, private theme: ThemeService) {}
     ngOnInit(): void {
         this.absoluteDateExample = getAbsoluteDate(new Date('12/1/2022'))
         this.relativeDateExample = getRelativeDate(new Date('12/1/2022'))
@@ -26,14 +28,14 @@ export class SettingsPage implements OnInit, AfterViewInit {
         await this.settings.init()
         let settings = this.settings.appSettings
         this.nameToShow = settings.nameToShow || 'Jacob'
-        this.dateFormat.checked = settings.relativeDate || false
+        this.dateFormat = settings.dateFormat || 'absolute'
         this.starterMessage.checked = settings.showStarterMessage ? true : settings.showStarterMessage == false ? false : false
         this.messageFontSize = settings.messageFontSize || 11
+        this.userTheme = settings.darkMode || 'auto'
     }
 
-    toggleDateFormat() {
-        this.dateFormat.checked = !this.dateFormat.checked
-        this.saveSettings()
+    oppositeTheme(theme: string) {
+        return theme == 'dark' ? 'light' : 'dark'
     }
 
     updateName(name: any) {
@@ -47,24 +49,20 @@ export class SettingsPage implements OnInit, AfterViewInit {
         this.saveSettings()
     }
 
-    async saveSettings() {
+    async saveSettings(changedTheme = false) {
+        if (changedTheme) {
+            this.theme.setMode(this.userTheme)
+        }
         await this.settings.updateSettings({
             nameToShow: this.nameToShow,
-            relativeDate: this.dateFormat.checked,
+            dateFormat: this.dateFormat,
             showStarterMessage: this.starterMessage.checked,
             messageFontSize: this.messageFontSize,
+            darkMode: this.userTheme
         })
     }
 
     pinFormatter(value: number) {
         return `${value}pt`
-    }
-
-    get showTallToggle(): boolean {
-        return getViewport().width <= 360
-    }
-
-    get showWideToggle(): boolean {
-        return getViewport().width > 360
     }
 }

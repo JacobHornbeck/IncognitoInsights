@@ -8,6 +8,7 @@ import { SettingsService } from "../services/settings.service";
 
 import { getAbsoluteDate, getRelativeDate } from "../utils/helper-functions";
 import { ShopService } from '../services/shop.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -23,15 +24,16 @@ export class HomePage implements OnInit {
     currentShopId: number | null
 
     constructor(private settings: SettingsService,
-                private shops: ShopService) {}
+                private shops: ShopService,
+                private router: Router) {}
     async ngOnInit(): Promise<void> {
-        this.settings.init()
+        await this.settings.init()
         this.allShops = await this.shops.getAllShops()
         this.shopName = await this.getDefaultShopName()
     }
 
     formatDate(date: Date): string {
-        if (this.settings.appSettings.relativeDate)
+        if (this.settings.appSettings.dateFormat == 'relative')
             return getRelativeDate(date)
         else
             return getAbsoluteDate(date)
@@ -72,6 +74,7 @@ export class HomePage implements OnInit {
             this.shops.saveShop(new Shop(this.shopName))
                 .then((allShops) => {
                     this.allShops = allShops || []
+                    this.router.navigate(['/shop', (this.allShops.length - 1)])
                 })
         }
         else if (ev.detail.role == 'edit' && this.shopName.length > 0 && this.currentShopId != null) {

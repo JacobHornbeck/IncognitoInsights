@@ -5,9 +5,10 @@ import { FilesystemService } from './filesystem.service';
 export class SettingsService {
     private settings = {
         nameToShow: 'Jacob',
-        relativeDate: false,
+        dateFormat: 'absolute',
         showStarterMessage: true,
-        messageFontSize: 11
+        messageFontSize: 11,
+        darkMode: 'auto'
     }
     constructor(private filesystem: FilesystemService) {
         this.init()

@@ -1,0 +1,29 @@
+ion-list {
+    background: none;
+    ion-item:first-of-type {
+        margin-top: 0;
+    }
+}
+
+.remove-column-padding ion-row:first-of-type ion-col {
+    padding: 0;
+}
+
+.fix-label {
+    &.up {
+        transform: translate(0, -2px) scale(0.8);
+    }
+    &.down {
+        transform: translate(0, 10px) scale(0.8);
+    }
+}
+
+.date-format-segment {
+    padding: 0;
+    ion-note {
+        display: block;
+        margin: 0 auto;
+        width: max-content;
+        margin-top: 5px;
+    }
+}
