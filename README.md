@@ -11,7 +11,7 @@ list, please create a new issue to bring it to my attention.
 ### Android
 #### Visual Issues
 - [x] Home page shop cards are too dark (dark mode)
-- [ ] Icons on audio player are wrong color (dark mode)
+- [x] Icons on audio player are wrong color (dark mode)
 
 #### Known Problems
 - [ ] Audio download doesn't work on Android

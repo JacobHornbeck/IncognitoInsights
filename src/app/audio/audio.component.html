@@ -1,9 +1,9 @@
 <audio (loadeddata)="init()" (timeupdate)="updateCurrentTime()" preload="auto" #audioEl></audio>
-<ion-icon size="large" (click)="playRecording()" *ngIf="audioEl.paused" name="play-circle-outline" color="light"></ion-icon>
-<ion-icon size="large" (click)="pauseRecording()" *ngIf="!audioEl.paused" name="pause-circle-outline" color="light"></ion-icon>
+<ion-icon size="large" (click)="playRecording()" *ngIf="audioEl.paused" name="play-circle-outline"></ion-icon>
+<ion-icon size="large" (click)="pauseRecording()" *ngIf="!audioEl.paused" name="pause-circle-outline"></ion-icon>
 <p>{{ calculateTime(currentTime) }}</p>
 <ion-range min="0" [max]="audioEl.duration || 1" (ionKnobMoveStart)="!audioEl.paused ? pauseRecording(true) : ''" (ionKnobMoveEnd)="timeSeek()" [(ngModel)]="currentTime" #timeRange></ion-range>
 <p>{{ calculateTime(audioEl.duration) }}</p>
-<ion-icon class="makeSmaller" size="large" (click)="muteRecording()" *ngIf="!audioEl.muted" name="volume-high-outline" color="light"></ion-icon>
-<ion-icon class="makeSmaller" size="large" (click)="unmuteRecording()" *ngIf="audioEl.muted" name="volume-mute-outline" color="light"></ion-icon>
-<a target="_blank" #downloadLink><ion-icon class="makeSmaller" size="large" name="download-outline" color="light"></ion-icon></a>
+<ion-icon class="makeSmaller" size="large" (click)="muteRecording()" *ngIf="!audioEl.muted" name="volume-high-outline"></ion-icon>
+<ion-icon class="makeSmaller" size="large" (click)="unmuteRecording()" *ngIf="audioEl.muted" name="volume-mute-outline"></ion-icon>
+<ion-icon class="makeSmaller" size="large" (click)="shareAudioRecording()" name="arrow-redo-outline"></ion-icon>
