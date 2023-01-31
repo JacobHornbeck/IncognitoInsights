@@ -21,6 +21,7 @@ list, please create a new issue to bring it to my attention.
 - [ ] Change splash screen
 - [ ] Either fix audio download, or add sharing option for images and audio recordings
 - [ ] Add option for user to switch between light and dark mode
+- [ ] Full image preview component for images
 
 
 ### iOS
