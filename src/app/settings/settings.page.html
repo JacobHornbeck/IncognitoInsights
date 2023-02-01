@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar color="tertiary">
+    <ion-toolbar color="primary">
         <ion-buttons slot="start">
             <ion-button routerLink="/home"><ion-icon name="arrow-back-outline" slot="start"></ion-icon></ion-button>
         </ion-buttons>
@@ -20,7 +20,7 @@
                             <ion-row>
                                 <ion-col>
                                     <ion-label position="stacked" class="fix-label up">Date Format</ion-label>
-                                    <ion-segment color="tertiary" [(ngModel)]="dateFormat" (click)="saveSettings()">
+                                    <ion-segment color="primary" [(ngModel)]="dateFormat" (click)="saveSettings()">
                                         <ion-segment-button value="absolute">
                                             <ion-label>Absolute</ion-label>
                                         </ion-segment-button>
@@ -51,7 +51,7 @@
                     </ion-item>
                     <ion-item color="light" class="ion-padding-top">
                         <ion-label position="stacked" class="fix-label up">App Theme</ion-label>
-                        <ion-segment color="tertiary" [(ngModel)]="userTheme" (click)="saveSettings(true)">
+                        <ion-segment color="primary" [(ngModel)]="userTheme" (click)="saveSettings(true)">
                             <ion-segment-button value="auto">
                                 <ion-icon name="contrast-outline"></ion-icon>
                             </ion-segment-button>
