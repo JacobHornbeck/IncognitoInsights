@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { share } from '../utils/helper-functions';
 
 @Component({
     selector: 'app-audio',
@@ -8,7 +9,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class AudioComponent implements AfterViewInit {
     @ViewChild('audioEl') audio: ElementRef;
-    @ViewChild('downloadLink') downloadLink: ElementRef;
     @Input() audioSource: string;
     @Input() recordDate: string;
     wasPlaying: boolean = false;
@@ -17,8 +17,6 @@ export class AudioComponent implements AfterViewInit {
     constructor(public sanitizer: DomSanitizer) {}
     ngAfterViewInit(): void {
         this.audio.nativeElement.src = this.audioSource
-        this.downloadLink.nativeElement.href = this.audioSource.replace(/(audio\/).*\;/i, 'audio/mp3;')
-        this.downloadLink.nativeElement.download = 'audioRecording-'+this.recordDate.replace(/\ /i, '-')
     }
 
     calculateTime(secs: number) {
@@ -58,6 +56,10 @@ export class AudioComponent implements AfterViewInit {
 
     updateCurrentTime() {
         this.currentTime = this.audio.nativeElement.currentTime
+    }
+
+    shareAudioRecording() {
+        share('audioRecording.mp3', this.audioSource)
     }
 
     timeSeek() {

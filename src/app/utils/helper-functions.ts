@@ -1,3 +1,6 @@
+import { Directory, Filesystem } from "@capacitor/filesystem"
+import { Share } from "@capacitor/share"
+
 const months = [
     'January',
     'February',
@@ -52,4 +55,20 @@ export function getViewport() {
         h = win.innerHeight || e.clientHeight || g.clientHeight;
     
     return { width: w, height: h }
+}
+
+export async function share(fileName: string, base64Data: string) {
+    await Filesystem.writeFile({
+        path: fileName,
+        data: base64Data,
+        directory: Directory.Cache
+    })
+    const uriResult = await Filesystem.getUri({
+        directory: Directory.Cache,
+        path: fileName
+    })
+    return await Share.share({
+        title: fileName,
+        url: uriResult.uri,
+    })
 }
