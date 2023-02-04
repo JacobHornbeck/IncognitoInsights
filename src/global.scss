@@ -10,20 +10,20 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "~@ionic/angular/css/core.css";
+@import "@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
-@import "~@ionic/angular/css/normalize.css";
-@import "~@ionic/angular/css/structure.css";
-@import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import '@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
 
 
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
@@ -202,7 +202,7 @@ app-audio {
 }
 
 @media (prefers-color-scheme: dark) {
-    .md body {
+    body {
         &.dark {
             --ion-background-color: #121212;
             --ion-background-color-rgb: 18,18,18;
@@ -232,6 +232,7 @@ app-audio {
             --ion-toolbar-background: #1f1f1f;
             --ion-tab-bar-background: #1f1f1f;
             --ion-card-background: #2e2e2e;
+            --image-view-background: darkslategray;
         }
         &.light {
             --ion-background-color: #ffffff;
@@ -241,8 +242,11 @@ app-audio {
             --ion-item-background: #ffffff;
             --ion-toolbar-background: #ffffff;
             --ion-tab-bar-background: #ffffff;
+            --ion-toolbar-border-color: #f0f0f0;
             --ion-card-background: #ffffff;
             --ion-color-step-850: #000000;
+            --ion-color-step-350: #ffffff;
+            --image-view-background: #dddddd;
 
             .ion-color-light {
                 --ion-color-base: var(--ion-color-dark, #222428) !important;
@@ -262,10 +266,16 @@ app-audio {
             }
         }
     }
+    .ios ion-modal {
+        --ion-toolbar-background: #ffffff;
+        --ion-background-color: #ffffff;
+        --ion-background-color-rgb: 255,255,255;
+        --ion-toolbar-border-color: #f0f0f0;
+    }
 }
 
 @media (prefers-color-scheme: light) {
-    .md body {
+    body {
         &.dark {
             --ion-background-color: #121212;
             --ion-background-color-rgb: 18,18,18;
@@ -295,6 +305,7 @@ app-audio {
             --ion-toolbar-background: #1f1f1f;
             --ion-tab-bar-background: #1f1f1f;
             --ion-card-background: #2e2e2e;
+            --image-view-background: darkslategray;
     
             .ion-color-light {
                 --ion-color-base: var(--ion-color-dark, #222428) !important;
@@ -318,15 +329,7 @@ app-audio {
             --ion-background-color-rgb: 255,255,255;
             --ion-text-color: #000000;
             --ion-text-color-rgb: 0,0,0;
-    
-            // .ion-color-light {
-            //     --ion-color-base: var(--ion-color-dark, #222428) !important;
-            //     --ion-color-base-rgb: var(--ion-color-dark-rgb, 34, 36, 40) !important;
-            //     --ion-color-contrast: var(--ion-color-dark-contrast, #fff) !important;
-            //     --ion-color-contrast-rgb: var(--ion-color-dark-contrast-rgb, 255, 255, 255) !important;
-            //     --ion-color-shade: var(--ion-color-dark-shade, #1e2023) !important;
-            //     --ion-color-tint: var(--ion-color-dark-tint, #383a3e) !important;
-            // }
+            --image-view-background: #dddddd;
         }
     }
 }
