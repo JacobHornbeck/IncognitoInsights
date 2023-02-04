@@ -19,9 +19,9 @@ list, please create a new issue to bring it to my attention.
 #### Features to Implement
 - [ ] Change icon
 - [ ] Change splash screen
-- [x] Either fix audio download, or add sharing option for images and audio recordings
+- [x] ~~Either fix audio download, or add sharing option for images and audio recordings~~
 - [x] ~~Add option for user to switch between light and dark mode~~
-- [x] Full image preview component for images
+- [x] ~~Full image preview component for images~~
 
 ### iOS
 - [ ] Add support for iOS devices
