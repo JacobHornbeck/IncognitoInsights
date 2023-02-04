@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OverlayEventDetail } from '@ionic/core';
 import { IonModal } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 import { Shop } from '../models/shop.model';
 
 import { SettingsService } from "../services/settings.service";
+import { ShopService } from '../services/shop.service';
 
 import { getAbsoluteDate, getRelativeDate } from "../utils/helper-functions";
-import { ShopService } from '../services/shop.service';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-home',
