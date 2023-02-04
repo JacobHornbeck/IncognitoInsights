@@ -1,0 +1,16 @@
+ion-content {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    --background: var(--image-view-background);
+
+    ion-img {
+        position: absolute;
+        transform: translate(calc(50vw - 50%), calc(50vh - 50% - 25px));
+        height: calc(90vh - 50px);
+        object-position: center;
+        object-fit: contain;
+        width: 90%;
+        z-index: 100;
+    }
+}

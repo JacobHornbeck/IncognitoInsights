@@ -8,6 +8,7 @@ import { ShopPageRoutingModule } from './shop-routing.module';
 
 import { ShopPage } from './shop.page';
 import { AudioComponent } from '../audio/audio.component';
+import { ImageViewComponent } from './image-view/image-view.component';
 
 @NgModule({
     imports: [
@@ -16,6 +17,6 @@ import { AudioComponent } from '../audio/audio.component';
         IonicModule,
         ShopPageRoutingModule
     ],
-    declarations: [ShopPage, AudioComponent]
+    declarations: [ShopPage, AudioComponent, ImageViewComponent]
 })
 export class ShopPageModule {}

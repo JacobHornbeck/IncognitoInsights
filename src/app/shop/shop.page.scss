@@ -13,7 +13,33 @@
         padding: 0 1rem;
     }
 
-    @for $i from 9 through 13 {
+    &.image {
+        height: 65vmin;
+        width: 65vmin;
+        ion-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            object-position: center;
+            &::after {
+                content: 'Tap to view';
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                position: absolute;
+                font-size: 20px;
+                display: flex;
+                height: 100%;
+                width: 100%;
+                left: 0;
+                top: 0;
+                background: rgba(0, 0, 0, 0.5);
+            }
+        }
+    }
+
+    @for $i from 8 through 16 {
         &.fontSize#{$i} {
             font-size: #{$i}pt;
         }
@@ -107,5 +133,35 @@ app-audio {
     }
     ion-icon {
         transform: scale(0.9);
+    }
+}
+
+app-image-view {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: all 0.3s;
+    
+    &.hide {
+        pointer-events: none;
+        opacity: 0;
+        top: 50px;
+    }
+    &.show {
+        pointer-events: all;
+        opacity: 1;
+    }
+}
+
+@keyframes imageViewComeIn {
+    from {
+        opacity: 0;
+        top: 50px;
+    }
+    to {
+        opacity: 1;
+        top: 0;
     }
 }

@@ -1,19 +1,24 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+/* Library Imports */
+import { Component,  OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { VoiceRecorder } from "capacitor-voice-recorder";
 import { ActivatedRoute } from '@angular/router';
-import { IonContent } from '@ionic/angular';
+import { IonContent, IonModal } from '@ionic/angular';
+import { OverlayEventDetail } from "@ionic/core";
+import { Subscription } from 'rxjs';
 
+/* Model Imports */
 import { Content } from '../models/content.model';
 
+/* Utility Imports */
 import { getPreciseTime } from "../utils/helper-functions";
 
+/* Service Imports */
 import { SettingsService } from '../services/settings.service';
 import { ShopService } from '../services/shop.service';
 import { TimerService } from '../services/timer.service';
 import { ToastService } from '../services/toast.service';
 import { AddImageService } from '../services/add-image.service';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-shop',
@@ -22,30 +27,42 @@ import { Subscription } from 'rxjs';
 })
 export class ShopPage implements OnInit, OnDestroy {
     @ViewChild('messagesContainer') content: IonContent;
-    nameToShow: string = 'Jacob'
-    showStarterMessage: boolean = true
-    messageFontSize: number = 11
-    messages: Content[] = []
-    shopId: number = -1
-    audioStatus: string = 'NONE'
+    @ViewChild(IonModal) modal: IonModal;
+
+    /* Local Setting Variables */
+    nameToShow: string = 'Jacob';
+    showStarterMessage: boolean = true;
+    messageFontSize: number = 11;
+    shopId: number = -1;
+    
+    /* Other Local Variables */
+    messages: Content[] = [];
+    audioStatus: string = 'NONE';
+    showImageView: boolean = false;
+    messageToDelete: number = -1;
+    deletingType: string = 'shop content';
+    imageViewSrc: string = '';
+
+    /* Subscription Holders */
     currentRouteSubscription: Subscription;
     addImageSubscription: Subscription;
 
-    constructor(private settings: SettingsService,
-                private shops: ShopService,
-                public  timer: TimerService,
-                private activeRoute: ActivatedRoute,
-                private toast: ToastService,
-                private addImage: AddImageService) {
+    constructor(private settings: SettingsService, private shops: ShopService, public  timer: TimerService,
+                private activeRoute: ActivatedRoute, private toast: ToastService, private addImage: AddImageService) {
+        /* Subscribe to activeRoute to get the shopID */
         this.currentRouteSubscription = this.activeRoute.params.subscribe(async (route: any) => {
             this.shopId = route.id;
             this.messages = (await this.shops.getShop(this.shopId)).data
         })
+
+        /* Subscribe to afterRestart, for when the app returns to focus after taking a picture */
         this.addImageSubscription = this.addImage.afterRestart.subscribe((imageData: string) => {
             this.post('photo take', true, 'command');
             this.post(imageData || '', false, 'image')
             this.scroll(1000, true)
         })
+
+        /* Check for recording permissions, and ask if needed */
         VoiceRecorder.hasAudioRecordingPermission()
             .then((result: any) => {
                 if (result.value == false) {
@@ -58,6 +75,8 @@ export class ShopPage implements OnInit, OnDestroy {
             .catch((error: any) => {
                 console.log(error);
             })
+
+        /* Check for camera permissions, and ask if needed */
         Camera.checkPermissions()
             .then((result: any) => {
                 if (result.camera != 'granted') {
@@ -106,7 +125,7 @@ export class ShopPage implements OnInit, OnDestroy {
 
     async startAudioRecording() {
         try {
-            let result = await VoiceRecorder.startRecording()
+            await VoiceRecorder.startRecording()
             this.updateAudioStatus('RECORDING')
 
             this.post('audio start', true, 'command')
@@ -123,7 +142,7 @@ export class ShopPage implements OnInit, OnDestroy {
 
     async pauseAudioRecording() {
         try {
-            let result = await VoiceRecorder.pauseRecording()
+            await VoiceRecorder.pauseRecording()
             this.updateAudioStatus('PAUSED')
 
             this.post('audio pause', true, 'command')
@@ -141,7 +160,7 @@ export class ShopPage implements OnInit, OnDestroy {
 
     async resumeAudioRecording() {
         try {
-            let result = await VoiceRecorder.resumeRecording()
+            await VoiceRecorder.resumeRecording()
             this.updateAudioStatus('RECORDING')
 
             this.post('audio resume', true, 'command')
@@ -286,15 +305,46 @@ export class ShopPage implements OnInit, OnDestroy {
     }
 
     deleteMessage(id: number) {
-        this.messages = this.messages.filter((value: any, index: number) => {
-            if (index == id) return false
-            return true
-        })
-        if (this.shopId >= 0) {
-            this.shops.updateShopData(this.shopId, this.messages)
+        this.messageToDelete = id;
+        if (['image', 'audio', 'note', 'command'].includes(this.messages[id].type))
+            this.deletingType = this.messages[id].type
+        if (this.messages[id].type == 'note' && !this.messages[id].sent)
+            this.deletingType = 'result'
+        this.modal.present();
+    }
+
+    openImageView(src: string) {
+        this.imageViewSrc = src;
+        this.showImageView = true;
+    }
+
+    closeImageView() {
+        this.imageViewSrc = '';
+        this.showImageView = false;
+    }
+
+    onWillDismiss(event: Event) {
+        const ev = event as CustomEvent<OverlayEventDetail<string>>;
+        if (ev.detail.role == 'delete' && this.messageToDelete >= 0) {
+            this.messages = this.messages.filter((value: any, index: number) => {
+                if (index == this.messageToDelete) return false
+                return true
+            })
+            if (this.shopId >= 0) {
+                this.shops.updateShopData(this.shopId, this.messages)
+            }
+            else {
+                this.toast.createToast('Couldn\'t save, please try again later')
+            }
         }
-        else {
-            this.toast.createToast('Couldn\'t save, please try again later')
-        }
+        this.messageToDelete = -1
+    }
+
+    deleteContent() {
+        this.modal.dismiss(null, 'delete')
+    }
+
+    cancel() {
+        this.modal.dismiss(null, 'cancel')
     }
 }

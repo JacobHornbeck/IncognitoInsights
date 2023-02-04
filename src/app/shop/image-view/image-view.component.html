@@ -1,0 +1,14 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button color="dark" (click)="closeImage()"><ion-icon slot="icon-only" name="close-outline"></ion-icon></ion-button>
+        </ion-buttons>
+        <ion-title class="ion-text-center">Full Image</ion-title>
+        <ion-buttons slot="end">
+            <ion-button color="dark" (click)="shareImage()"><ion-icon slot="icon-only" name="arrow-redo-outline"></ion-icon></ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-img [src]="imageSrc" *ngIf="imageSrc.length > 0"></ion-img>
+</ion-content>
