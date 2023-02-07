@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { AddImageService } from './services/add-image.service';
+import { SplashScreen } from "@capacitor/splash-screen";
 import { App } from "@capacitor/app";
+
+import { AddImageService } from './services/add-image.service';
 import { ThemeService } from './services/theme.service';
+import { Platform } from '@ionic/angular';
 
 @Component({
     selector: 'app-root',
@@ -10,7 +13,7 @@ import { ThemeService } from './services/theme.service';
     styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-    constructor(private router: Router, private addImage: AddImageService, theme: ThemeService) {
+    constructor(private router: Router, private addImage: AddImageService, theme: ThemeService, platform: Platform) {
         this.addListeners();
         theme.darkMode$.subscribe((colorMode) => {
             document.body.classList.remove('auto')
@@ -18,9 +21,12 @@ export class AppComponent {
             document.body.classList.remove('light')
             document.body.classList.add(colorMode)
         })
+        platform.ready().then(() => {
+            SplashScreen.hide()
+        })
     }
     prepareRoute(outlet: RouterOutlet) {
-        return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation']
+        return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
     }
     async addListeners() {
         App.addListener('appRestoredResult', (data: any) => {
