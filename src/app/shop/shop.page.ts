@@ -42,6 +42,7 @@ export class ShopPage implements OnInit, OnDestroy {
     messageToDelete: number = -1;
     deletingType: string = 'shop content';
     imageViewSrc: string = '';
+    savingMessages: boolean = false;
 
     /* Subscription Holders */
     currentRouteSubscription: Subscription;
@@ -116,7 +117,10 @@ export class ShopPage implements OnInit, OnDestroy {
             sent: sent
         })
         if (this.shopId >= 0) {
-            this.shops.updateShopData(this.shopId, this.messages)
+            this.savingMessages = true;
+            this.shops.updateShopData(this.shopId, this.messages).then(() => {
+                this.savingMessages = false;
+            })
         }
         else {
             this.toast.createToast('Couldn\'t save, please try again later')
@@ -331,7 +335,10 @@ export class ShopPage implements OnInit, OnDestroy {
                 return true
             })
             if (this.shopId >= 0) {
-                this.shops.updateShopData(this.shopId, this.messages)
+                this.savingMessages = true;
+                this.shops.updateShopData(this.shopId, this.messages).then(() => {
+                    this.savingMessages = false;
+                })
             }
             else {
                 this.toast.createToast('Couldn\'t save, please try again later')
