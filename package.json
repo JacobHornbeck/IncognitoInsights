@@ -34,6 +34,7 @@
     "@ionic/cli": "^6.20.8",
     "@ionic/pwa-elements": "^3.1.1",
     "capacitor-voice-recorder": "^4.0.2",
+    "cordova-plugin-lottie-splashscreen": "^0.10.0",
     "ionicons": "^6.0.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
