@@ -11,23 +11,18 @@ const config: CapacitorConfig = {
     },
     plugins: {
         SplashScreen: {
-            launchShowDuration: 3000,
             launchAutoHide: true,
-            backgroundColor: "#ffffffff",
-            androidSplashResourceName: "splashscreen",
-            androidScaleType: "CENTER_CROP",
-            showSpinner: true,
-            androidSpinnerStyle: "large",
-            iosSpinnerStyle: "small",
-            spinnerColor: "#999999",
-            splashFullScreen: true,
-            splashImmersive: true,
-            layoutName: "launch_screen",
-            useDialog: true,
+            launchShowDuration: 0
         }
     },
-    android: {
-        
+    cordova: {
+        preferences: {
+            LottieFullScreen: "true",
+            LottieScaleType: "CENTER_CROP",
+            LottieHideAfterAnimationEnd: "true",
+            LottieAnimationLocation: "public/assets/splash.json",
+            LottieFadeOutDuration: "500"
+        }
     }
 };
 
