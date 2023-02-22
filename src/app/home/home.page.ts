@@ -17,11 +17,12 @@ import { getAbsoluteDate, getRelativeDate } from "../utils/helper-functions";
 })
 export class HomePage implements OnInit {
     @ViewChild(IonModal) modal: IonModal;
-    allShops: Shop[] = []
-    shopName: string = 'New Shop'
-    mode: string = 'create'
-    modalTitle: string = 'Start Shop'
-    currentShopId: number | null
+    allShops: Shop[] = [];
+    shopName: string = 'New Shop';
+    mode: string = 'create';
+    modalTitle: string = 'Start Shop';
+    currentShopId: number | null;
+    loadingShop: boolean = false;
 
     constructor(private settings: SettingsService,
                 private shops: ShopService,
@@ -45,27 +46,30 @@ export class HomePage implements OnInit {
     }
 
     async newShop() {
-        this.mode = 'create'
-        this.modalTitle = 'Start Shop'
-        this.shopName = await this.getDefaultShopName()
-        this.modal.present()
+        this.mode = 'create';
+        this.modalTitle = 'Start Shop';
+        this.shopName = await this.getDefaultShopName();
+        this.loadingShop = true;
+        this.modal.present();
     }
 
     
     async editShop(id: number) {
-        this.mode = 'edit'
-        this.modalTitle = 'Edit Shop'
-        this.currentShopId = id
-        this.shopName = (await this.shops.getShop(id)).title
-        this.modal.present()
+        this.mode = 'edit';
+        this.modalTitle = 'Edit Shop';
+        this.currentShopId = id;
+        this.shopName = (await this.shops.getShop(id)).title;
+        this.loadingShop = true;
+        this.modal.present();
     }
     
     async deleteShop(id: number) {
-        this.mode = 'delete'
-        this.modalTitle = 'Delete Shop'
-        this.currentShopId = id
-        this.shopName = (await this.shops.getShop(id)).title
-        this.modal.present()
+        this.mode = 'delete';
+        this.modalTitle = 'Delete Shop';
+        this.currentShopId = id;
+        this.shopName = (await this.shops.getShop(id)).title;
+        this.loadingShop = true;
+        this.modal.present();
     }
 
     onWillDismiss(event: Event) {
@@ -73,23 +77,24 @@ export class HomePage implements OnInit {
         if (ev.detail.role == 'create' && this.shopName.length > 0) {
             this.shops.saveShop(new Shop(this.shopName))
                 .then((allShops) => {
-                    this.allShops = allShops || []
-                    this.router.navigate(['/shop', (this.allShops.length - 1)])
+                    this.allShops = allShops || [];
+                    this.router.navigate(['/shop', (this.allShops.length - 1)]);
                 })
         }
         else if (ev.detail.role == 'edit' && this.shopName.length > 0 && this.currentShopId != null) {
             this.shops.updateShopTitle(this.currentShopId, this.shopName)
                 .then((allShops) => {
-                    this.allShops = allShops || []
+                    this.allShops = allShops || [];
                 })
         }
         else if (ev.detail.role == 'delete' && this.currentShopId != null) {
             this.shops.deleteShop(this.currentShopId)
                 .then((allShops) => {
-                    this.allShops = allShops || []
+                    this.allShops = allShops || [];
                 })
         }
-        this.currentShopId = null
+        this.loadingShop = false;
+        this.currentShopId = null;
     }
 
     cancel() {

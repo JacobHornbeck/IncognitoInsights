@@ -5,6 +5,7 @@
             <ion-button routerLink="/settings" class="button-icon-only"><ion-icon slot="icon-only" name="settings-outline"></ion-icon></ion-button>
             <ion-button routerLink="/settings" class="button-with-icon"><ion-icon slot="start" name="settings-outline"></ion-icon><span>Settings</span></ion-button>
         </ion-buttons>
+        <ion-progress-bar type="indeterminate" color="dark" *ngIf="loadingShop"></ion-progress-bar>
     </ion-toolbar>
 </ion-header>
 <ion-content class="custom-scroll-box">
