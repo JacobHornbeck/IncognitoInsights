@@ -34,7 +34,8 @@
                         ],
                         "styles": [
                             "src/theme/variables.scss",
-                            "src/global.scss"
+                            "src/global.scss",
+                            "src/app/shop/shop.page.scss"
                         ],
                         "scripts": []
                     },
@@ -62,7 +63,7 @@
                             "outputHashing": "all"
                         },
                         "development": {
-                            "buildOptimizer": false,
+                            "buildOptimizer": true,
                             "optimization": true,
                             "vendorChunk": true,
                             "extractLicenses": false,
