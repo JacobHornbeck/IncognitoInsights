@@ -11,20 +11,13 @@ export class TimerService {
     private formatTime(t: number) {
         let timeString = ''
 
-        if (t > 3600000) {
-            timeString += Math.floor(t/3600000)+' hour'+'s'.substring(0, Math.floor(t/3600000))
-            t -= 3600000*Math.floor(t/3600000)
-        }
-        if (t > 60000) {
-            if (timeString.length > 0) timeString += ' '
-            timeString += Math.floor(t/60000)+' minute'+'s'.substring(0, Math.floor(t/60000))
-            t -= 60000*Math.floor(t/60000)
-        }
-        if (t > 1000) {
-            if (timeString.length > 0) timeString += ' '
-            timeString += Math.floor(t/1000)+' second'+'s'.substring(0, Math.floor(t/1000))
-            t -= 1000*Math.floor(t/1000)
-        }
+        
+        timeString += Math.floor(t/60000).toString().padStart(2, '0')
+        t -= 60000*Math.floor(t/60000)
+
+        if (timeString.length > 0) timeString += ':'
+        timeString += Math.floor(t/1000).toString().padStart(2, '0')
+        t -= 1000*Math.floor(t/1000)
 
         return timeString
     }
@@ -40,6 +33,13 @@ export class TimerService {
             return this.formatTime(this.laps[lapNum].getTime() - this.laps[lapNum-1].getTime())
 
         return -1
+    }
+
+    private getTotalTimeFromLap(lapNum: number) {
+        if (lapNum < 0 || lapNum > this.laps.length || !this.start || !this.end)
+            return -1
+        
+        return this.formatTime(this.laps[lapNum].getTime() - this.start.getTime())
     }
 
     begin() {
@@ -60,15 +60,14 @@ export class TimerService {
     }
 
     getLapTimes() {
-        let str = `Total time: ${this.getUserFriendlyTime}<br>Number of laps: ${this.laps.length}<br><br>`
+        let str = '';
         if (this.wasActive) {
             if (this.laps.length > 0) {
-                str += `Start - Lap 1: ${this.getLapTime(0)}<br>`
-                str += this.laps.map((value: any, index: number) => {
-                    if (index == this.laps.length-1)
-                        return `Lap ${index+1} - End: ${this.getLapTime(index+1)}`
-                    return `Lap ${index+1} - Lap ${index+2}: ${this.getLapTime(index+1)}`
-                }).join('<br>')
+                str += `#${this.laps.length}\t${this.getLapTime(this.laps.length)}\t${this.formatTime(this.getTime)}<br>`
+                for (let i = this.laps.length - 1; i >= 0; i--) {
+                    str += `#${i+1}\t${this.getLapTime(i)}\t${this.getTotalTimeFromLap(i)}`
+                    if (i > 0) str += '<br>'
+                }
             }
             else str = this.getUserFriendlyTime
 

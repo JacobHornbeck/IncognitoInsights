@@ -23,13 +23,13 @@ list, please create a new issue to bring it to my attention.
 - [ ] Change splash screen
 - [ ] Tool icon stack instead of tool menu
 - [ ] Random response message
-- [ ] Reformat timer results
 - [ ] App tutorial
 
 #### Features Implemented
 - [x] Either fix audio download, or add sharing option for images and audio recordings
 - [x] Add option for user to switch between light and dark mode
 - [x] Full image preview component for images
+- [x] Reformat timer results
 
 ### iOS
 - [ ] Add support for iOS devices
