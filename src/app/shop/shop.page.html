@@ -1,100 +1,81 @@
-<ion-menu type="overlay" contentId="mainContent" side="end">
-    <ion-header>
-        <ion-toolbar>
-            <ion-title>Tools</ion-title>
-            <ion-buttons slot="end">
-                <ion-menu-toggle>
-                    <ion-button><ion-icon name="close-outline" slot="icon-only"></ion-icon></ion-button>
-                </ion-menu-toggle>
-            </ion-buttons>
-        </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-        <ion-menu-toggle>
-            <ion-list lines="full">
-                <ion-item button (click)="takePhoto()" [detail]="false">
-                    <ion-icon name="camera-outline" slot="start"></ion-icon>
-                    Take photo
-                </ion-item>
-                <ion-item button *ngIf="!timer.isActive" (click)="startTimer()" [detail]="false">
-                    <ion-icon name="stopwatch-outline" slot="start"></ion-icon>
-                    Start timer
-                </ion-item>
-                <ion-item button *ngIf="timer.isActive" (click)="addLap()" [detail]="false">
-                    <ion-icon name="stopwatch-outline" slot="start"></ion-icon>
-                    Add lap
-                </ion-item>
-                <ion-item button *ngIf="timer.isActive" (click)="stopTimer()" [detail]="false">
-                    <ion-icon name="stopwatch-outline" slot="start"></ion-icon>
-                    Stop timer
-                </ion-item>
-                <ion-item button *ngIf="timer.wasActive" (click)="timeFromTimer()" [detail]="false">
-                    <ion-icon name="stopwatch-outline" slot="start"></ion-icon>
-                    Get timer time
-                </ion-item>
-                <ion-item button *ngIf="audioStatus == 'NONE'" (click)="startAudioRecording()" [detail]="false">
-                    <ion-icon name="mic-outline" slot="start"></ion-icon>
-                    Start recording
-                </ion-item>
-                <ion-item button *ngIf="audioStatus == 'RECORDING'" (click)="pauseAudioRecording()" [detail]="false">
-                    <ion-icon name="pause-circle-outline" slot="start"></ion-icon>
-                    Pause Recording
-                </ion-item>
-                <ion-item button *ngIf="audioStatus == 'PAUSED'" (click)="resumeAudioRecording()" [detail]="false">
-                    <ion-icon name="play-circle-outline" slot="start"></ion-icon>
-                    Resume Recording
-                </ion-item>
-                <ion-item button *ngIf="audioStatus == 'RECORDING'" (click)="stopAudioRecording()" [detail]="false">
-                    <ion-icon name="mic-off-outline" slot="start"></ion-icon>
-                    Stop Recording
-                </ion-item>
-            </ion-list>
-        </ion-menu-toggle>
-    </ion-content>
-</ion-menu>
-<div class="ion-page" id="mainContent">
-    <ion-header>
-        <ion-toolbar>
-            <ion-buttons slot="start">
-                <ion-button color="dark" routerLink="/home"><ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon></ion-button>
-            </ion-buttons>
-            <ion-title class="ion-text-center">{{ nameToShow }}</ion-title>
-            <ion-buttons slot="end">
-                <ion-menu-toggle>
-                    <ion-button color="dark"><ion-icon name="hammer-outline" slot="icon-only"></ion-icon></ion-button>
-                </ion-menu-toggle>
-            </ion-buttons>
-            <ion-progress-bar type="indeterminate" *ngIf="savingMessages"></ion-progress-bar>
-        </ion-toolbar>
-    </ion-header>
-    <ion-content #messagesContainer>
-        <div class="message-item result starterMessage {{showStarterMessage}} {{ 'fontSize'+messageFontSize }}" *ngIf="showStarterMessage">
-            <p>Welcome to the shop page!</p>
-            <p>This is where you can take notes, pictures, record time, etc</p>
-            <p>Your notes/commands will be on the right side, and the outcome will be on the left</p>
-            <p>To make a note, just enter your note and hit send. To use a command, just type the command and hit send</p>
-            <p>Use the icon in the top right corner to view a list of all the tools. You can tap on them to use it, or type the command</p>
-            <p>If you don't want a note or command, click the trash can to delete it.</p>
-        </div>
-        <div class="message-item result starterMessage" *ngIf="!showStarterMessage && messages.length == 0">
-            <p>Nothing to show.</p>
-            <p>If you would like to see the starter message, turn it on in settings</p>
-        </div>
-        <div class="message-item {{ message.sent ? 'output' : 'result' }} {{ 'fontSize'+messageFontSize }} {{ message.type }}" *ngFor="let message of messages; let i = index">
-            <span class="message-time-stamp"><ion-button size="small" fill="clear" color="danger" (click)="deleteMessage(i)"><ion-icon name="trash-outline"></ion-icon></ion-button>{{ message.date }}</span>
-            <ion-img [src]="message.content" alt="picture taken" *ngIf="message.type == 'image'" (click)="openImageView(message.content)"></ion-img>
-            <app-audio *ngIf="message.type == 'audio'" [audioSource]="message.content" [recordDate]="message.date"></app-audio>
-            <p *ngIf="message.type == 'note'" [innerHTML]="message.content"></p>
-            <code *ngIf="message.type == 'command'">{{ message.content }}</code>
-        </div>
-    </ion-content>
-    <ion-footer>
-        <ion-item color="light" lines="none">
-            <ion-input type="text" placeholder="Enter message" #messageInput (keyDown.enter)="!messageInput.value ? '' : send(messageInput)"></ion-input>
-            <ion-button class="ion-padding-vertical" (click)="send(messageInput)" [disabled]="!messageInput.value"><ion-icon name="send-outline" slot="icon-only"></ion-icon></ion-button>
-        </ion-item>
-    </ion-footer>
-</div>
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title class="ion-text-center">{{ nameToShow }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button color="dark" routerLink="/settings"><ion-icon name="settings-outline" slot="icon-only"></ion-icon></ion-button>
+        </ion-buttons>
+        <ion-progress-bar type="indeterminate" *ngIf="savingMessages"></ion-progress-bar>
+    </ion-toolbar>
+</ion-header>
+<ion-content #messagesContainer>
+    <div class="message-item result starterMessage {{showStarterMessage}} {{ 'fontSize'+messageFontSize }}" *ngIf="showStarterMessage">
+        <p>Welcome to the shop page!</p>
+        <p>This is where you can take notes, pictures, record time, etc</p>
+        <p>Your notes/commands will be on the right side, and the outcome will be on the left</p>
+        <p>To make a note, just enter your note and hit send. To use a command, just type the command and hit send</p>
+        <p>Use the icon in the top right corner to view a list of all the tools. You can tap on them to use it, or type the command</p>
+        <p>If you don't want a note or command, click the trash can to delete it.</p>
+    </div>
+    <div class="message-item result starterMessage" *ngIf="!showStarterMessage && messages.length == 0">
+        <p>Nothing to show.</p>
+        <p>If you would like to see the starter message, turn it on in settings</p>
+    </div>
+    <div class="message-item {{ message.sent ? 'output' : 'result' }} {{ 'fontSize'+messageFontSize }} {{ message.type }}" *ngFor="let message of messages; let i = index">
+        <span class="message-time-stamp"><ion-button size="small" fill="clear" color="danger" (click)="deleteMessage(i)"><ion-icon name="trash-outline"></ion-icon></ion-button>{{ message.date }}</span>
+        <ion-img [src]="message.content" alt="picture taken" *ngIf="message.type == 'image'" (click)="openImageView(message.content)"></ion-img>
+        <app-audio *ngIf="message.type == 'audio'" [audioSource]="message.content" [recordDate]="message.date"></app-audio>
+        <p *ngIf="message.type == 'note'" [innerHTML]="message.content"></p>
+        <code *ngIf="message.type == 'command'">{{ message.content }}</code>
+    </div>
+    <div class="tool-menu">
+        <!-- Icon for Picture -->
+        <button (click)="takePhoto()">
+            <ion-icon size="large" name="camera-outline"></ion-icon>
+        </button>
+
+        <!-- Icons for Timer -->
+        <button *ngIf="!timer.isActive" (click)="startTimer()">
+            <ion-icon size="large" name="stopwatch-outline"></ion-icon>
+            <ion-icon name="play"></ion-icon>
+        </button>
+        <button *ngIf="timer.isActive" (click)="addLap()">
+            <ion-icon size="large" name="stopwatch-outline"></ion-icon>
+            <ion-icon name="timer"></ion-icon>
+        </button>
+        <button *ngIf="timer.isActive" (click)="stopTimer()">
+            <ion-icon size="large" name="stopwatch-outline"></ion-icon>
+            <ion-icon name="stop"></ion-icon>
+        </button>
+
+        <!-- Icons for Audio -->
+        <button *ngIf="audioStatus == 'NONE'" (click)="startAudioRecording()">
+            <ion-icon size="large" name="mic-outline"></ion-icon>
+            <ion-icon name="play"></ion-icon>
+        </button>
+        <button *ngIf="audioStatus == 'RECORDING'" (click)="pauseAudioRecording()">
+            <ion-icon size="large" name="mic-outline"></ion-icon>
+            <ion-icon name="pause"></ion-icon>
+        </button>
+        <button *ngIf="audioStatus == 'PAUSED'" (click)="resumeAudioRecording()">
+            <ion-icon size="large" name="mic-outline"></ion-icon>
+            <ion-icon name="play"></ion-icon>
+        </button>
+        <button *ngIf="audioStatus == 'RECORDING'" (click)="stopAudioRecording()">
+            <ion-icon size="large" name="mic-outline"></ion-icon>
+            <ion-icon name="stop"></ion-icon>
+        </button>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-item color="light" lines="none">
+        <ion-input type="text" placeholder="Enter message" #messageInput (keyDown.enter)="!messageInput.value ? '' : send(messageInput)"></ion-input>
+        <ion-button class="ion-padding-vertical" (click)="send(messageInput)" [disabled]="!messageInput.value"><ion-icon name="send-outline" slot="icon-only"></ion-icon></ion-button>
+    </ion-item>
+</ion-footer>
+
 <app-image-view [class]="showImageView ? 'show' : 'hide'" [imageSrc]="imageViewSrc" (exitingImageView)="closeImageView()"></app-image-view>
 <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
     <ng-template>

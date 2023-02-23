@@ -58,7 +58,6 @@ export class ShopPage implements OnInit, OnDestroy {
 
         /* Subscribe to afterRestart, for when the app returns to focus after taking a picture */
         this.addImageSubscription = this.addImage.afterRestart.subscribe((imageData: string) => {
-            this.post('photo take', true, 'command');
             this.post(imageData || '', false, 'image')
             this.scroll(1000, true)
         })
@@ -109,7 +108,7 @@ export class ShopPage implements OnInit, OnDestroy {
         }, delay);
     }
 
-    post(content: string, sent: boolean = true, type: 'note' | 'command' | 'image' | 'audio' = 'note') {
+    post(content: string, sent: boolean = true, type: 'note' | 'image' | 'audio' = 'note') {
         this.messages.push({
             date: getPreciseTime(new Date()),
             content: content,
@@ -132,15 +131,12 @@ export class ShopPage implements OnInit, OnDestroy {
             await VoiceRecorder.startRecording()
             this.updateAudioStatus('RECORDING')
 
-            this.post('audio start', true, 'command')
             this.post('audio recording started', false)
 
             this.scroll()
         }
         catch (e: any) {
-            if (e.message == 'ALREADY_RECORDING') {
-                this.toast.createToast('Recording is already started')
-            }
+            this.toast.createToast('Something went wrong, please try again!')
         }
     }
 
@@ -149,16 +145,13 @@ export class ShopPage implements OnInit, OnDestroy {
             await VoiceRecorder.pauseRecording()
             this.updateAudioStatus('PAUSED')
 
-            this.post('audio pause', true, 'command')
             this.post('audio recording paused', false)
 
             this.scroll()
         }
         catch (e: any) {
             console.log(e.message);
-            if (e.message == 'ALREADY_RECORDING') {
-                this.toast.createToast('Recording is already started')
-            }
+            this.toast.createToast('Something went wrong, please try again!')
         }
     }
 
@@ -167,16 +160,13 @@ export class ShopPage implements OnInit, OnDestroy {
             await VoiceRecorder.resumeRecording()
             this.updateAudioStatus('RECORDING')
 
-            this.post('audio resume', true, 'command')
             this.post('audio recording resumed', false)
 
             this.scroll()
         }
         catch (e: any) {
             console.log(e.message);
-            if (e.message == 'ALREADY_RECORDING') {
-                this.toast.createToast('Recording is already started')
-            }
+            this.toast.createToast('Something went wrong, please try again!')
         }
     }
 
@@ -185,16 +175,13 @@ export class ShopPage implements OnInit, OnDestroy {
             let result = await VoiceRecorder.stopRecording()
             this.updateAudioStatus('NONE')
 
-            this.post('audio stop', true, 'command')
             this.post(`data:${result.value.mimeType};base64,${result.value.recordDataBase64}`, false, 'audio')
 
             this.scroll()
         }
         catch (e: any) {
             console.log(e.message);
-            if (e.message == 'ALREADY_RECORDING') {
-                this.toast.createToast('Recording is already started')
-            }
+            this.toast.createToast('Something went wrong, please try again!')
         }
     }
 
@@ -213,7 +200,6 @@ export class ShopPage implements OnInit, OnDestroy {
                 source: CameraSource.Camera
             })
             .then((result:any) => {
-                this.post('photo take', true, 'command');
                 this.post(`data:image/jpeg;base64,${result.base64String}`, false, 'image')
                 this.scroll(1000, true)
             })
@@ -229,7 +215,6 @@ export class ShopPage implements OnInit, OnDestroy {
             return
         }
         this.timer.begin()
-        this.post('timer start', true, 'command');
         this.post('timer has been started', false)
         this.scroll()
     }
@@ -240,7 +225,6 @@ export class ShopPage implements OnInit, OnDestroy {
             return
         }
         this.timer.lap()
-        this.post('timer lap', true, 'command');
         this.post('a lap has been added to the timer', false)
         this.scroll()
     }
@@ -251,17 +235,6 @@ export class ShopPage implements OnInit, OnDestroy {
             return
         }
         this.timer.stop()
-        this.post('timer stop', true, 'command');
-        this.post('timer has been stopped', false);
-        this.scroll()
-    }
-
-    timeFromTimer() {
-        if (!this.timer.wasActive) {
-            this.toast.createToast('No timer has finished')
-            return
-        }
-        this.post('timer time', true, 'command')
         this.post(this.timer.getLapTimes(), false)
         this.scroll()
     }
@@ -270,39 +243,7 @@ export class ShopPage implements OnInit, OnDestroy {
         let message = input.value.toString()
         if (message.length == 0) return
 
-        switch (message.toLowerCase()) {
-            case 'timer start':
-                this.startTimer()
-            break;
-            case 'timer lap':
-                this.addLap()
-            break;
-            case 'timer stop':
-                this.stopTimer()
-            break;
-            case 'timer show time':
-                this.timeFromTimer()
-            break;
-            case 'audio start':
-                this.startAudioRecording()
-            break;
-            case 'audio pause':
-                this.pauseAudioRecording()
-            break;
-            case 'audio resume':
-                this.resumeAudioRecording()
-            break;
-            case 'audio stop':
-                this.stopAudioRecording()
-            break;
-            case 'photo take':
-                this.takePhoto()
-            break;
-            default:
-                this.post(message)
-                this.post('Note saved', false)
-            break;
-        }
+        this.post(message)
 
         input.value = ''
         this.scroll()
