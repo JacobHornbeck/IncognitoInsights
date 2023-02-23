@@ -72,7 +72,7 @@
         margin: 1rem;
     }
     &.result {
-        background: darken(skyblue, 15);
+        background: lighten(royalblue, 10);
         
         span {
             left: 0;
@@ -82,8 +82,8 @@
         }
     }
     &.output {
+        background: darken(skyblue, 15);
         margin-left: auto;
-        background: royalblue;
         
         span {
             right: 0;
@@ -108,6 +108,34 @@
         margin: 0;
         & + p {
             padding-top: 0.5rem;
+        }
+    }
+}
+
+
+.tool-menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    row-gap: 10px;
+    bottom: 70px;
+    right: 20px;
+
+    button {
+        border-radius: 50% !important;
+        box-shadow: 1px 1px 5px 3px gray,
+                    inset 0 0 3px white;
+        background: rgba(royalblue, 0.7);
+        position: relative;
+        height: 40px;
+        width: 40px;
+
+        ion-icon + ion-icon {
+            position: absolute;
+            bottom: 7px;
+            right: 7px;
+            filter: drop-shadow(0 0 3px black);
+            transform: scale(1.2);
         }
     }
 }
@@ -142,7 +170,9 @@ app-image-view {
     height: 100%;
     width: 100%;
     opacity: 0;
-    transition: all 0.3s;
+    z-index: 100;
+    transition: top 0.3s,
+                opacity 0.3s;
     
     &.hide {
         pointer-events: none;
@@ -152,16 +182,6 @@ app-image-view {
     &.show {
         pointer-events: all;
         opacity: 1;
-    }
-}
-
-@keyframes imageViewComeIn {
-    from {
-        opacity: 0;
-        top: 50px;
-    }
-    to {
-        opacity: 1;
-        top: 0;
+        top: 0px;
     }
 }

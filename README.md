@@ -14,6 +14,7 @@ list, please create a new issue to bring it to my attention.
 #### Fixed Visual Issues
 - [x] Home page shop cards are too dark (dark mode)
 - [x] Icons on audio player are wrong color (dark mode)
+- [x] Adjust message colors
 
 #### Known Problems
  - [ ] Camera intent can terminate app, save timer and audio (if possible) for app restore
