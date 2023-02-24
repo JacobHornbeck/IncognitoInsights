@@ -63,7 +63,7 @@ export class TimerService {
         let str = '';
         if (this.wasActive) {
             if (this.laps.length > 0) {
-                str += `#${this.laps.length}\t${this.getLapTime(this.laps.length)}\t${this.formatTime(this.getTime)}<br>`
+                str += `#${this.laps.length+1}\t${this.getLapTime(this.laps.length)}\t${this.formatTime(this.getTime)}<br>`
                 for (let i = this.laps.length - 1; i >= 0; i--) {
                     str += `#${i+1}\t${this.getLapTime(i)}\t${this.getTotalTimeFromLap(i)}`
                     if (i > 0) str += '<br>'
