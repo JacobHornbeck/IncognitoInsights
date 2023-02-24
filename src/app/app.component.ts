@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { SplashScreen } from "@capacitor/splash-screen";
 import { App } from "@capacitor/app";
 
 import { AddImageService } from './services/add-image.service';
 import { ThemeService } from './services/theme.service';
-import { Platform } from '@ionic/angular';
 
 @Component({
     selector: 'app-root',
@@ -13,16 +11,13 @@ import { Platform } from '@ionic/angular';
     styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-    constructor(private router: Router, private addImage: AddImageService, theme: ThemeService, platform: Platform) {
+    constructor(private router: Router, private addImage: AddImageService, theme: ThemeService) {
         this.addListeners();
         theme.darkMode$.subscribe((colorMode) => {
             document.body.classList.remove('auto')
             document.body.classList.remove('dark')
             document.body.classList.remove('light')
             document.body.classList.add(colorMode)
-        })
-        platform.ready().then(() => {
-            SplashScreen.hide()
         })
     }
     prepareRoute(outlet: RouterOutlet) {
