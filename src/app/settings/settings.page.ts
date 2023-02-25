@@ -65,4 +65,8 @@ export class SettingsPage implements OnInit, AfterViewInit {
     pinFormatter(value: number) {
         return `${value}pt`
     }
+
+    startTutorial() {
+        
+    }
 }
