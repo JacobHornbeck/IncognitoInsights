@@ -15,29 +15,6 @@
                         <ion-label position="floating">Name To Show</ion-label>
                         <ion-input [value]="nameToShow" (ionBlur)="updateName(nameInput)" #nameInput></ion-input>
                     </ion-item>
-                    <ion-item color="light" class="ion-padding-vertical remove-column-padding date-format-segment">
-                        <ion-grid style="width: 100%; padding: 0;" [fixed]="true">
-                            <ion-row>
-                                <ion-col>
-                                    <ion-label position="stacked" class="fix-label up">Date Format</ion-label>
-                                    <ion-segment color="primary" [(ngModel)]="dateFormat" (click)="saveSettings()">
-                                        <ion-segment-button value="absolute">
-                                            <ion-label>Absolute</ion-label>
-                                        </ion-segment-button>
-                                        <ion-segment-button value="relative">
-                                            <ion-label>Relative</ion-label>
-                                        </ion-segment-button>
-                                    </ion-segment>
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col>
-                                    <ion-note *ngIf="dateFormat == 'absolute'">e.g. {{ absoluteDateExample }}</ion-note>
-                                    <ion-note *ngIf="dateFormat == 'relative'">e.g. {{ relativeDateExample }}</ion-note>
-                                </ion-col>
-                            </ion-row>
-                        </ion-grid>
-                    </ion-item>
                     <ion-item color="light" class="ion-margin-vertical with-checkbox" (click)="updateStarter(starterCheckbox)">
                         <ion-checkbox slot="start" #starterCheckbox></ion-checkbox>
                         <ion-label>Show starter message</ion-label>

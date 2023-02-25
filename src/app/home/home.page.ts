@@ -8,7 +8,7 @@ import { Shop } from '../models/shop.model';
 import { SettingsService } from "../services/settings.service";
 import { ShopService } from '../services/shop.service';
 
-import { getAbsoluteDate, getRelativeDate } from "../utils/helper-functions";
+import { getAbsoluteDate } from "../utils/helper-functions";
 
 @Component({
     selector: 'app-home',
@@ -34,10 +34,7 @@ export class HomePage implements OnInit {
     }
 
     formatDate(date: Date): string {
-        if (this.settings.appSettings.dateFormat == 'relative')
-            return getRelativeDate(date)
-        else
-            return getAbsoluteDate(date)
+        return getAbsoluteDate(date)
     }
 
     private async getDefaultShopName() {

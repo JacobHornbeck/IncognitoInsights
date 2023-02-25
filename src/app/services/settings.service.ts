@@ -5,7 +5,6 @@ import { FilesystemService } from './filesystem.service';
 export class SettingsService {
     private settings = {
         nameToShow: 'Jacob',
-        dateFormat: 'absolute',
         showStarterMessage: true,
         messageFontSize: 11,
         darkMode: 'auto'

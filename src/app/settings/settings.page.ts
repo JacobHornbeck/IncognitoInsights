@@ -1,34 +1,26 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { IonCheckbox } from '@ionic/angular';
 
 import { SettingsService } from '../services/settings.service';
 import { ThemeService } from '../services/theme.service';
-import { getAbsoluteDate, getRelativeDate } from "../utils/helper-functions";
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage implements OnInit, AfterViewInit {
+export class SettingsPage implements AfterViewInit {
     @ViewChild('starterCheckbox') starterMessage: IonCheckbox;
     dateFormat: string = 'absolute';
     userTheme: string = 'auto';
     nameToShow: string = 'Jacob';
-    absoluteDateExample: string;
-    relativeDateExample: string;
     messageFontSize: number = 11;
 
     constructor(private settings: SettingsService, private theme: ThemeService) {}
-    ngOnInit(): void {
-        this.absoluteDateExample = getAbsoluteDate(new Date('12/1/2022'))
-        this.relativeDateExample = getRelativeDate(new Date('12/1/2022'))
-    }
     async ngAfterViewInit(): Promise<void> {
         await this.settings.init()
         let settings = this.settings.appSettings
         this.nameToShow = settings.nameToShow || 'Jacob'
-        this.dateFormat = settings.dateFormat || 'absolute'
         this.starterMessage.checked = settings.showStarterMessage ? true : settings.showStarterMessage == false ? false : false
         this.messageFontSize = settings.messageFontSize || 11
         this.userTheme = settings.darkMode || 'auto'
@@ -55,7 +47,6 @@ export class SettingsPage implements OnInit, AfterViewInit {
         }
         await this.settings.updateSettings({
             nameToShow: this.nameToShow,
-            dateFormat: this.dateFormat,
             showStarterMessage: this.starterMessage.checked,
             messageFontSize: this.messageFontSize,
             darkMode: this.userTheme
@@ -67,6 +58,6 @@ export class SettingsPage implements OnInit, AfterViewInit {
     }
 
     startTutorial() {
-        
+
     }
 }
