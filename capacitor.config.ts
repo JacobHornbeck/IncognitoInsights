@@ -5,10 +5,10 @@ const config: CapacitorConfig = {
     appName: 'MysteryShoppingApp',
     webDir: 'dist/mystery-shopping-app',
     bundledWebRuntime: false,
-    server: {
-        url: "http://192.168.0.4:8100",
-        cleartext: true
-    },
+    // server: {
+    //     url: "http://192.168.0.4:8100",
+    //     cleartext: true
+    // },
     plugins: {
         SplashScreen: {
             launchAutoHide: true,
