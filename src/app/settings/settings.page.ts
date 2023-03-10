@@ -3,6 +3,7 @@ import { IonCheckbox } from '@ionic/angular';
 
 import { SettingsService } from '../services/settings.service';
 import { ThemeService } from '../services/theme.service';
+import { TutorialService } from '../services/tutorial.service';
 
 @Component({
   selector: 'app-settings',
@@ -16,7 +17,7 @@ export class SettingsPage implements AfterViewInit {
     nameToShow: string = 'Jacob';
     messageFontSize: number = 11;
 
-    constructor(private settings: SettingsService, private theme: ThemeService) {}
+    constructor(private settings: SettingsService, private theme: ThemeService, public tutorial: TutorialService) {}
     async ngAfterViewInit(): Promise<void> {
         await this.settings.init()
         let settings = this.settings.appSettings
@@ -55,9 +56,5 @@ export class SettingsPage implements AfterViewInit {
 
     pinFormatter(value: number) {
         return `${value}pt`
-    }
-
-    startTutorial() {
-
     }
 }

@@ -1,16 +1,19 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-title><ion-icon name="bag-handle-outline"></ion-icon> Mystery Shopping</ion-title>
+        <ion-buttons slot="start">
+            <ion-button><ion-icon src="/assets/logo-white.svg" size="large"></ion-icon></ion-button>
+        </ion-buttons>
+        <ion-title>Incognito Insights</ion-title>
         <ion-buttons slot="end">
-            <ion-button routerLink="/settings" class="button-icon-only"><ion-icon slot="icon-only" name="settings-outline"></ion-icon></ion-button>
-            <ion-button routerLink="/settings" class="button-with-icon"><ion-icon slot="start" name="settings-outline"></ion-icon><span>Settings</span></ion-button>
+            <ion-button routerLink="/settings" class="button-icon-only"><ion-icon size="large" slot="icon-only" name="settings-outline"></ion-icon></ion-button>
+            <ion-button routerLink="/settings" class="button-with-icon"><ion-icon size="large" slot="start" name="settings-outline"></ion-icon><span>Settings</span></ion-button>
         </ion-buttons>
         <ion-progress-bar type="indeterminate" color="dark" *ngIf="loadingShop"></ion-progress-bar>
     </ion-toolbar>
 </ion-header>
 <ion-content class="custom-scroll-box">
     <div class="shop-list">
-        <ion-card *ngFor="let shop of allShops; let i = index">
+        <ion-card *ngFor="let shop of allShops; let i = index" [style]="tutorial.isPresenting ? 'display: none;' : 'display: block;'">
             <ion-card-header class="no-padding-bottom">
                 <ion-card-title>{{ shop.title }}</ion-card-title>
                 <ion-card-subtitle>{{ formatDate(shop.date) }}</ion-card-subtitle>
@@ -21,7 +24,7 @@
                 <ion-button color="primary" slot="end" (click)="editShop(i)">Edit</ion-button>
             </ion-buttons>
         </ion-card>
-        <ion-text class="ion-margin-start" *ngIf="allShops.length == 0">
+        <ion-text class="ion-margin-start" *ngIf="allShops.length == 0 || tutorial.isPresenting">
             <h3>No Shops</h3>
         </ion-text>
     </div>

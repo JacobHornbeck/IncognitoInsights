@@ -1,0 +1,135 @@
+<div class="overlay-container" *ngIf="tutorial.isPresenting">
+    <div id="stage0" *ngIf="tutorial.stage == 0" (click)="tutorial.goToStage(1)">
+        <h3>Welcome to the App!</h3>
+        <p>
+            The goal of this app is to help you with your mystery shopping!
+            In this short tutorial, we will explain how to use this app.
+        </p>
+        <p>
+            To navigate through the tutorial, just tap the screen when you
+            are done reading what is on the page.
+        </p>
+    </div>
+    <div id="stage1" *ngIf="tutorial.stage == 1" (click)="tutorial.goToStage(2)">
+        <svg-arrow arrowToShow="straight" style="margin-top: 20vh; height: 17vh; overflow: hidden;"></svg-arrow>
+        <p>Here will be a list of all the shops you started</p>
+    </div>
+    <div id="stage2" *ngIf="tutorial.stage == 2" (click)="tutorial.goToStage(3)">
+        <p>
+            To create a shop use this button<br>
+        </p>
+        <svg-arrow arrowToShow="short" style="transform: scale(-1);"></svg-arrow>
+    </div>
+    <div id="stage3" *ngIf="tutorial.stage == 3" (click)="tutorial.goToStage(4)">
+        <p>
+            Enter the desired name for the shop here. For this tutorial, we will call it "Demo Shop".<br>
+        </p>
+        <svg-arrow arrowToShow="short"></svg-arrow>
+    </div>
+    <div id="stage4" *ngIf="tutorial.stage == 4" (click)="tutorial.goToStage(5)">
+        <p>
+            Click this button to create the shop and open it
+        </p>
+        <svg-arrow arrowToShow="short"></svg-arrow>
+    </div>
+    <div id="stage5" *ngIf="tutorial.stage == 5" (click)="tutorial.goToStage(6)">
+        <p>
+            This is the shop page. This is where you can take notes for the shop
+            you are doing. You can also take a photo, use a timer, or record audio.
+        </p>
+        <p>
+            In the following pages, we will go over the tools and how they work.
+        </p>
+    </div>
+    <div id="stage6" *ngIf="tutorial.stage == 6" (click)="tutorial.goToStage(7)">
+        <p>
+            This button is how you add a photo to your notes.
+        </p>
+        <svg-arrow arrowToShow="short"></svg-arrow>
+    </div>
+    <div id="stage7" *ngIf="tutorial.stage == 7" (click)="tutorial.goToStage(8)">
+        <p>
+            This button is how you start a timer. Once you start a timer, you can
+            add a lap or stop it.
+        </p>
+        <svg-arrow arrowToShow="short"></svg-arrow>
+    </div>
+    <div id="stage8" *ngIf="tutorial.stage == 8" (click)="tutorial.goToStage(9)">
+        <p>
+            This button is how you add a lap to the timer. The output will show
+            the accumulated time as well as the time between laps.
+        </p>
+        <svg-arrow arrowToShow="short"></svg-arrow>
+    </div>
+    <div id="stage9" *ngIf="tutorial.stage == 9" (click)="tutorial.goToStage(10)">
+        <p>
+            This button is how you stop the timer, once stopped, you will see
+            the output of the timer, and each lap (if there are any).
+        </p>
+        <svg-arrow arrowToShow="short"></svg-arrow>
+    </div>
+    <div id="stage10" *ngIf="tutorial.stage == 10" (click)="tutorial.goToStage(11)">
+        <p>
+            This button is how you start an audio recording. Once you start the
+            recording, you can pause it or stop it.
+        </p>
+        <svg-arrow arrowToShow="short"></svg-arrow>
+    </div>
+    <div id="stage11" *ngIf="tutorial.stage == 11" (click)="tutorial.goToStage(12)">
+        <p>
+            This button is how you pause an audio recording. If the recording is
+            paused, then you have the option to resume it or to stop it.
+        </p>
+        <svg-arrow arrowToShow="short"></svg-arrow>
+    </div>
+    <div id="stage12" *ngIf="tutorial.stage == 12" (click)="tutorial.goToStage(13)">
+        <p>
+            This button is how you resume an audio recording. Once resumed, you
+            can pause it again or stop it.
+        </p>
+        <svg-arrow arrowToShow="short"></svg-arrow>
+    </div>
+    <div id="stage13" *ngIf="tutorial.stage == 13" (click)="tutorial.goToStage(14)">
+        <p>
+            This button is how you stop and audio recording. When you stop it,
+            it will output the result. This result will allow you to listen to
+            it over and share it.
+        </p>
+        <svg-arrow arrowToShow="short"></svg-arrow>
+    </div>
+    <div id="stage14" *ngIf="tutorial.stage == 14" (click)="tutorial.goToStage(15)">
+        <!-- Taking notes -->
+    </div>
+    <div id="stage15" *ngIf="tutorial.stage == 15" (click)="tutorial.goToStage(16)">
+        <!-- Random responses -->
+    </div>
+    <div id="stage16" *ngIf="tutorial.stage == 16" (click)="tutorial.goToStage(17)">
+        <!-- Sharing/Downloading photos and audio -->
+    </div>
+    <div id="stage17" *ngIf="tutorial.stage == 17" (click)="tutorial.goToStage(18)">
+        <!-- Deleting messages -->
+    </div>
+    <div id="stage18" *ngIf="tutorial.stage == 18" (click)="tutorial.goToStage(19)">
+        <!-- Settings -->
+    </div>
+    <div id="stage19" *ngIf="tutorial.stage == 19" (click)="tutorial.goToStage(20)">
+        <!-- Name -->
+    </div>
+    <div id="stage20" *ngIf="tutorial.stage == 20" (click)="tutorial.goToStage(21)">
+        <!-- Starter message -->
+    </div>
+    <div id="stage21" *ngIf="tutorial.stage == 21" (click)="tutorial.goToStage(22)">
+        <!-- Fontsize -->
+    </div>
+    <div id="stage22" *ngIf="tutorial.stage == 22" (click)="tutorial.goToStage(23)">
+        <!-- App theme -->
+    </div>
+    <div id="stage23" *ngIf="tutorial.stage == 23" (click)="tutorial.stop()">
+        <!-- Tutorial -->
+    </div>
+
+    <div class="notice">
+        Tutorial is active...
+    </div>
+    <div class="skip" (click)="tutorial.stop()">Skip <ion-icon name="play-forward"></ion-icon></div>
+</div>

@@ -9,6 +9,7 @@ import { SettingsService } from "../services/settings.service";
 import { ShopService } from '../services/shop.service';
 
 import { getAbsoluteDate } from "../utils/helper-functions";
+import { TutorialService } from '../services/tutorial.service';
 
 @Component({
     selector: 'app-home',
@@ -24,9 +25,12 @@ export class HomePage implements OnInit {
     currentShopId: number | null;
     loadingShop: boolean = false;
 
-    constructor(private settings: SettingsService,
-                private shops: ShopService,
-                private router: Router) {}
+    constructor(private settings: SettingsService, private shops: ShopService,
+                private router: Router, public tutorial: TutorialService) {
+        this.tutorial.createDemoShop.subscribe(() => { this.newShop(true); })
+        this.tutorial.startDemoShop.subscribe(() => { this.confirm('create'); })
+        this.tutorial.deleteDemoShop.subscribe((id: number) => { this.deleteShop(id) })
+    }
     async ngOnInit(): Promise<void> {
         await this.settings.init()
         this.allShops = await this.shops.getAllShops()
@@ -42,10 +46,10 @@ export class HomePage implements OnInit {
         return `Shop #${shopCount+1}`
     }
 
-    async newShop() {
+    async newShop(demo: boolean = false) {
         this.mode = 'create';
         this.modalTitle = 'Start Shop';
-        this.shopName = await this.getDefaultShopName();
+        this.shopName = demo ? 'Demo Shop' : await this.getDefaultShopName();
         this.loadingShop = true;
         this.modal.present();
     }

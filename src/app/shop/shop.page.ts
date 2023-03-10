@@ -19,6 +19,7 @@ import { ShopService } from '../services/shop.service';
 import { TimerService } from '../services/timer.service';
 import { ToastService } from '../services/toast.service';
 import { AddImageService } from '../services/add-image.service';
+import { TutorialService } from '../services/tutorial.service';
 
 @Component({
     selector: 'app-shop',
@@ -49,7 +50,8 @@ export class ShopPage implements OnInit, OnDestroy {
     addImageSubscription: Subscription;
 
     constructor(private settings: SettingsService, private shops: ShopService, public  timer: TimerService,
-                private activeRoute: ActivatedRoute, private toast: ToastService, private addImage: AddImageService) {
+                private activeRoute: ActivatedRoute, private toast: ToastService,
+                private addImage: AddImageService, private tutorial: TutorialService) {
         /* Subscribe to activeRoute to get the shopID */
         this.currentRouteSubscription = this.activeRoute.params.subscribe(async (route: any) => {
             this.shopId = route.id;
@@ -65,12 +67,7 @@ export class ShopPage implements OnInit, OnDestroy {
         /* Check for recording permissions, and ask if needed */
         VoiceRecorder.hasAudioRecordingPermission()
             .then((result: any) => {
-                if (result.value == false) {
-                    VoiceRecorder.requestAudioRecordingPermission()
-                        .then((result: any) => {
-                            console.log(result);
-                        })
-                }
+                if (result.value == false) VoiceRecorder.requestAudioRecordingPermission()
             })
             .catch((error: any) => {
                 console.log(error);
@@ -86,6 +83,16 @@ export class ShopPage implements OnInit, OnDestroy {
             .catch((error: any) => {
                 console.log(error);
             })
+        
+        /* Check tutorial subscriptions */
+        this.tutorial.startDemoTimer.subscribe(() => { this.startTimer(); });
+        this.tutorial.addDemoTimerLap.subscribe(() => { this.addLap(); });
+        this.tutorial.stopDemoTimer.subscribe(() => { this.stopTimer(); });
+        
+        this.tutorial.startDemoAudio.subscribe(() => { this.startAudioRecording(); });
+        this.tutorial.pauseDemoAudio.subscribe(() => { this.pauseAudioRecording(); });
+        this.tutorial.resumeDemoAudio.subscribe(() => { this.resumeAudioRecording(); });
+        this.tutorial.stopDemoAudio.subscribe(() => { this.stopAudioRecording(); });
     }
     async ngOnInit(): Promise<void> {
         await this.settings.init()
@@ -106,6 +113,43 @@ export class ShopPage implements OnInit, OnDestroy {
 
             if (again) this.scroll(delay)
         }, delay);
+    }
+    
+    private checkAudioErrors(e: any) {
+        console.log(`Message: '${e.message}'`);
+        switch (e.message) {
+            case 'ALREADY_RECORDING':
+                this.toast.createToast('A recording is already in progress')
+            break;
+            case 'DEVICE_CANNOT_VOICE_RECORD':
+                this.toast.createToast('Sorry, your device doesn\'t support audio recording')
+            break;
+            case 'EMPTY_RECORDING':
+                this.toast.createToast('The recording was empty')
+            break;
+            case 'FAILED_TO_FETCH_RECORDING':
+                this.toast.createToast('Something went wrong, retrieving the recording. We apologize for the inconvenience')
+            break;
+            case 'FAILED_TO_RECORD':
+                this.toast.createToast('Failed to start recording, try again later')
+            break;
+            case 'MICROPHONE_BEING_USED':
+                this.toast.createToast('Another app is using your microphone')
+            break;
+            case 'MISSING_PERMISSION':
+                this.toast.createToast('Please allow microphone permission to use this feature')
+                VoiceRecorder.requestAudioRecordingPermission()
+            break;
+            case 'NOT_SUPPORTED_OS_VERSION':
+                this.toast.createToast('Your phone doesn\'t support pausing the recording')
+            break;
+            case 'RECORDING_HAS_NOT_STARTED':
+                this.toast.createToast('No recording in progress, cannot perform action')
+            break;
+            default:
+                this.toast.createToast('Something went wrong, please try again')
+            break;
+        }
     }
 
     post(content: string, sent: boolean = true, type: 'note' | 'image' | 'audio' = 'note') {
@@ -136,7 +180,7 @@ export class ShopPage implements OnInit, OnDestroy {
             this.scroll()
         }
         catch (e: any) {
-            this.toast.createToast('Something went wrong, please try again!')
+            this.checkAudioErrors(e);
         }
     }
 
@@ -150,8 +194,7 @@ export class ShopPage implements OnInit, OnDestroy {
             this.scroll()
         }
         catch (e: any) {
-            console.log(e.message);
-            this.toast.createToast('Something went wrong, please try again!')
+            this.checkAudioErrors(e);
         }
     }
 
@@ -165,8 +208,7 @@ export class ShopPage implements OnInit, OnDestroy {
             this.scroll()
         }
         catch (e: any) {
-            console.log(e.message);
-            this.toast.createToast('Something went wrong, please try again!')
+            this.checkAudioErrors(e);
         }
     }
 
@@ -180,8 +222,7 @@ export class ShopPage implements OnInit, OnDestroy {
             this.scroll()
         }
         catch (e: any) {
-            console.log(e.message);
-            this.toast.createToast('Something went wrong, please try again!')
+            this.checkAudioErrors(e);
         }
     }
 

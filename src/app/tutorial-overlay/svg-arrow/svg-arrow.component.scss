@@ -1,0 +1,19 @@
+svg {
+    filter: drop-shadow(1px 1px 4px rgba(black, 0.6));
+}
+
+.svg-arrow-long {
+    height: 155px;
+    width: 160px;
+    stroke: var(--ion-text-color);
+}
+.svg-arrow-short {
+    height: 85px;
+    width: 50px;
+    stroke: var(--ion-text-color);
+}
+.svg-arrow-straight {
+    height: 110px;
+    width: 30px;
+    stroke: var(--ion-text-color);
+}

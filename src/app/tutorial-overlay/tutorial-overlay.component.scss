@@ -1,0 +1,303 @@
+.overlay-container {
+    top: 0; left: 0;
+    bottom: 0; right: 0;
+    position: fixed;
+    border: 5px solid royalblue;
+    z-index: 30004;
+
+    * { z-index: inherit; }
+
+    .notice {
+        bottom: -1px; left: 0;
+        background: royalblue;
+        border-radius: 0 10px 0 0;
+        padding: 0.2rem 0.5rem;
+        pointer-events: none;
+        position: absolute;
+        font-size: 0.8rem;
+        z-index: 9999;
+    }
+    .skip {
+        align-items: center;
+        background: royalblue;
+        flex-direction: row !important;
+        padding: 0.25rem !important;
+        border-radius: 0 0 5px 0;
+        justify-content: center;
+        height: max-content;
+        width: 70px;
+        ion-icon {
+            overflow: hidden;
+            width: 25px;
+        }
+    }
+
+    & > *:not(.notice) {
+        top: 0; left: 0;
+        bottom: 0; right: 0;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        padding-top: 3rem;
+        display: flex;
+        z-index: 1000;
+
+        &:not(#stage0) * {
+            color: var(--ion-text-color);
+        }
+
+        * {
+            width: 85%;
+            max-width: 250px;
+            text-align: center;
+            color: white;
+        }
+    }
+
+    svg-arrow {
+        width: max-content !important;
+        svg { margin: 0 auto; }
+    }
+}
+
+#stage0 {
+    top: 0; left: 0;
+    bottom: 0; right: 0;
+    background: rgba(18,18,18,0.6);
+    backdrop-filter: blur(1px);
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    padding-top: 3rem;
+    display: flex;
+    z-index: 1000;
+
+    * {
+        width: 85%;
+        max-width: 250px;
+        text-align: center;
+        color: white;
+    }
+}
+
+#stage2 {
+    p {
+        position: absolute;
+        bottom: 120px;
+        width: 150px;
+        right: 80px;
+    }
+    svg-arrow {
+        position: absolute;
+        bottom: 75px;
+        right: 25px;
+    }
+}
+
+#stage3 {
+    p {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        color: white !important;
+        top: calc(50% - 160px);
+        max-width: 333px;
+        left: 50%;
+    }
+    svg-arrow {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(-1) rotate(45deg);
+        top: calc(50% - 50px); left: calc(50% + 10px);
+    }
+    small {
+        position: absolute;
+        transform: translate(-50%, 0);
+        color: white !important;
+        bottom: 15vh;
+        left: 50%;
+    }
+}
+
+#stage4 {
+    p {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        color: white !important;
+        top: calc(50% + 113px);
+        left: calc(50% - 56px);
+        max-width: 145px;
+    }
+    svg-arrow {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(-1, 1) rotate(-38deg);
+        top: calc(50% + 115px); left: calc(50% + 50px);
+    }
+}
+
+#stage5 {
+    background: rgba(18,18,18,0.6);
+    backdrop-filter: blur(1px);
+    p { color: white !important; }
+}
+
+#stage6 {
+    p {
+        position: absolute;
+        box-shadow: 2px 2px 6px rgba(gray, 0.7);
+        background: rgba(var(--ion-background-color-rgb), 0.5);
+        backdrop-filter: blur(2px);
+        border-radius: 10px;
+        max-width: 150px;
+        padding: 0.5rem;
+        bottom: 220px;
+        right: 75px;
+    }
+    svg-arrow {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(-1);
+        bottom: 163px;
+        right: -4px;
+    }
+}
+#stage7 {
+    p {
+        position: absolute;
+        box-shadow: 2px 2px 6px rgba(gray, 0.7);
+        background: rgba(var(--ion-background-color-rgb), 0.5);
+        backdrop-filter: blur(2px);
+        border-radius: 10px;
+        max-width: 200px;
+        padding: 0.5rem;
+        bottom: 164px;
+        right: 75px;
+    }
+    svg-arrow {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(-1);
+        bottom: 107px;
+        right: -4px;
+    }
+}
+
+#stage8 {
+    p {
+        position: absolute;
+        box-shadow: 2px 2px 6px rgba(gray, 0.7);
+        background: rgba(var(--ion-background-color-rgb), 0.5);
+        backdrop-filter: blur(2px);
+        border-radius: 10px;
+        max-width: 200px;
+        padding: 0.5rem;
+        bottom: 200px;
+        right: 75px;
+    }
+    svg-arrow {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(-1);
+        bottom: 163px;
+        right: -4px;
+    }
+}
+
+#stage9 {
+    p {
+        position: absolute;
+        box-shadow: 2px 2px 6px rgba(gray, 0.7);
+        background: rgba(var(--ion-background-color-rgb), 0.5);
+        backdrop-filter: blur(2px);
+        border-radius: 10px;
+        max-width: 200px;
+        padding: 0.5rem;
+        bottom: 164px;
+        right: 75px;
+    }
+    svg-arrow {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(-1);
+        bottom: 107px;
+        right: -4px;
+    }
+}
+
+/* Start audio recording */
+#stage10 {
+    p {
+        position: absolute;
+        box-shadow: 2px 2px 6px rgba(gray, 0.7);
+        background: rgba(var(--ion-background-color-rgb), 0.5);
+        backdrop-filter: blur(2px);
+        border-radius: 10px;
+        max-width: 200px;
+        padding: 0.5rem;
+        bottom: 100px;
+        right: 75px;
+    }
+    svg-arrow {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(-1);
+        bottom: 48px;
+        right: -4px;
+    }
+}
+
+/* Pause audio recording */
+#stage11 {
+    p {
+        position: absolute;
+        box-shadow: 2px 2px 6px rgba(gray, 0.7);
+        background: rgba(var(--ion-background-color-rgb), 0.5);
+        backdrop-filter: blur(2px);
+        border-radius: 10px;
+        max-width: 200px;
+        padding: 0.5rem;
+        bottom: 164px;
+        right: 75px;
+    }
+    svg-arrow {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(-1);
+        bottom: 107px;
+        right: -4px;
+    }
+}
+
+/* Resume audio recording */
+#stage12 {
+    p {
+        position: absolute;
+        box-shadow: 2px 2px 6px rgba(gray, 0.7);
+        background: rgba(var(--ion-background-color-rgb), 0.5);
+        backdrop-filter: blur(2px);
+        border-radius: 10px;
+        max-width: 200px;
+        padding: 0.5rem;
+        bottom: 100px;
+        right: 75px;
+    }
+    svg-arrow {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(-1);
+        bottom: 48px;
+        right: -4px;
+    }
+}
+
+/* Stop audio recording */
+#stage13 {
+    p {
+        position: absolute;
+        box-shadow: 2px 2px 6px rgba(gray, 0.7);
+        background: rgba(var(--ion-background-color-rgb), 0.5);
+        backdrop-filter: blur(2px);
+        border-radius: 10px;
+        max-width: 200px;
+        padding: 0.5rem;
+        bottom: 100px;
+        right: 75px;
+    }
+    svg-arrow {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(-1);
+        bottom: 48px;
+        right: -4px;
+    }
+}
