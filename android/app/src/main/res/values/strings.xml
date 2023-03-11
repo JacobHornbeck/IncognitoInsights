@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">IncognitoInsights</string>
-    <string name="title_activity_main">IncognitoInsights</string>
+    <string name="app_name">Incognito Insights</string>
+    <string name="title_activity_main">Incognito Insights</string>
     <string name="package_name">incognito.insights</string>
     <string name="custom_url_scheme">incognito.insights</string>
 </resources>
