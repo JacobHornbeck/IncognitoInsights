@@ -1,4 +1,4 @@
-package mystery.shopping.app;
+package incognito.insights;
 
 import com.getcapacitor.BridgeActivity;
 

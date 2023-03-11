@@ -1,14 +1,14 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-    appId: 'mystery.shopping.app',
-    appName: 'MysteryShoppingApp',
-    webDir: 'dist/mystery-shopping-app',
+    appId: 'incognito.insights',
+    appName: 'Incognito Insights',
+    webDir: 'dist/incognito-insights',
     bundledWebRuntime: false,
-    server: {
-        url: "http://192.168.0.4:8100",
-        cleartext: true
-    },
+    // server: {
+    //     url: "http://192.168.0.4:8100",
+    //     cleartext: true
+    // },
     plugins: {
         SplashScreen: {
             launchAutoHide: true,
