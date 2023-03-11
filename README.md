@@ -22,7 +22,7 @@ list, please create a new issue to bring it to my attention.
 - [ ] Tool icon stack instead of tool menu
 
 #### Features Implemented
-- [x] Either fix audio download, or add sharing option for images and audio recordings
+- [x] Added sharing option for images and audio recordings
 - [x] Add option for user to switch between light and dark mode
 - [x] Full image preview component for images
 - [x] Change splash screen
