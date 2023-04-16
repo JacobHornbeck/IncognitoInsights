@@ -49,6 +49,8 @@ export class ShopPage implements OnInit, OnDestroy {
     currentRouteSubscription: Subscription;
     addImageSubscription: Subscription;
 
+    susSubscription: Subscription;
+
     constructor(private settings: SettingsService, private shops: ShopService, public  timer: TimerService,
                 private activeRoute: ActivatedRoute, private toast: ToastService,
                 private addImage: AddImageService, private tutorial: TutorialService) {
@@ -62,6 +64,10 @@ export class ShopPage implements OnInit, OnDestroy {
         this.addImageSubscription = this.addImage.afterRestart.subscribe((imageData: string) => {
             this.post(imageData || '', false, 'image')
             this.scroll(1000, true)
+        })
+
+        this.susSubscription = this.settings.updateSettingsEvent.subscribe(() => {
+            this.ngOnInit()
         })
 
         /* Check for recording permissions, and ask if needed */

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { OverlayEventDetail } from '@ionic/core';
 import { IonModal } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -10,13 +10,14 @@ import { ShopService } from '../services/shop.service';
 
 import { getAbsoluteDate } from "../utils/helper-functions";
 import { TutorialService } from '../services/tutorial.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-home',
     templateUrl: 'home.page.html',
     styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
     @ViewChild(IonModal) modal: IonModal;
     allShops: Shop[] = [];
     shopName: string = 'New Shop';
@@ -25,11 +26,22 @@ export class HomePage implements OnInit {
     currentShopId: number | null;
     loadingShop: boolean = false;
 
+    cdsSubscription: Subscription;
+    sdsSubscription: Subscription;
+    ddsSubscription: Subscription;
+    susSubscription: Subscription;
+
     constructor(private settings: SettingsService, private shops: ShopService,
                 private router: Router, public tutorial: TutorialService) {
-        this.tutorial.createDemoShop.subscribe(() => { this.newShop(true); })
-        this.tutorial.startDemoShop.subscribe(() => { this.confirm('create'); })
-        this.tutorial.deleteDemoShop.subscribe((id: number) => { this.deleteShop(id) })
+        this.cdsSubscription = this.tutorial.createDemoShop.subscribe(() => { this.newShop(true); })
+        this.sdsSubscription = this.tutorial.startDemoShop.subscribe(() => { this.confirm('create'); })
+        this.ddsSubscription = this.tutorial.deleteDemoShop.subscribe((id: number) => { this.deleteShop(id) })
+    }
+    ngOnDestroy(): void {
+        this.cdsSubscription.unsubscribe();
+        this.sdsSubscription.unsubscribe();
+        this.ddsSubscription.unsubscribe();
+        this.susSubscription.unsubscribe();
     }
     async ngOnInit(): Promise<void> {
         await this.settings.init()

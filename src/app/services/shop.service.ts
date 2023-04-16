@@ -31,7 +31,7 @@ export class ShopService {
     }
 
     private updateFile(shops: Shop[], loader: HTMLIonLoadingElement | null = null) {
-        return this.filesystem.write('shops.json', JSON.stringify(this.shops))
+        return this.filesystem.write('shops.json', JSON.stringify(shops))
             .then(async () => {
                 if (loader) loader.dismiss()
                 return await this.allShops

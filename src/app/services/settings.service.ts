@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { FilesystemService } from './filesystem.service';
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
+    updateSettingsEvent = new Subject<void>();
     private settings = {
         nameToShow: 'Jacob',
         showStarterMessage: true,

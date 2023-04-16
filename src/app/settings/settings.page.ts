@@ -6,9 +6,9 @@ import { ThemeService } from '../services/theme.service';
 import { TutorialService } from '../services/tutorial.service';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.page.html',
-  styleUrls: ['./settings.page.scss'],
+    selector: 'app-settings',
+    templateUrl: './settings.page.html',
+    styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements AfterViewInit {
     @ViewChild('starterCheckbox') starterMessage: IonCheckbox;
@@ -25,6 +25,10 @@ export class SettingsPage implements AfterViewInit {
         this.starterMessage.checked = settings.showStarterMessage ? true : settings.showStarterMessage == false ? false : false
         this.messageFontSize = settings.messageFontSize || 11
         this.userTheme = settings.darkMode || 'auto'
+    }
+
+    goingBack() {
+        this.settings.updateSettingsEvent.next();
     }
 
     oppositeTheme(theme: string) {
